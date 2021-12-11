@@ -1,0 +1,18 @@
+format 222
+
+classcanvas 128002 class_ref 134530 // Etudiant
+  simpleclassdiagramsettings end
+  xyz 37 41 2000
+end
+classcanvas 128130 class_ref 134658 // Administrateur
+  simpleclassdiagramsettings end
+  xyz 23 207 2000
+end
+classcanvas 128258 class_ref 134786 // Enseignant
+  simpleclassdiagramsettings end
+  xyz 28 130 2000
+end
+usecasecanvas 128386 usecase_ref 134530 // Connexion
+  xyzwh 172 126 3005 64 32 label_xy 178 158
+end
+end

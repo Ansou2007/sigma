@@ -1,0 +1,12 @@
+window_sizes 1280 645 320 955 495 104
+
+diagrams
+  active  usecasediagram_ref 134530 // archivage diagramme
+    764 396 100 A4 0 0
+end
+show_stereotypes
+selected usecaseview_ref 134530 // archivage
+open
+  usecaseview_ref 134530 // archivage
+end
+end
