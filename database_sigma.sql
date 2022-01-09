@@ -4,17 +4,19 @@ CREATE DATABASE  IF NOT EXISTS sigma;
 
 USE sigma;
 
-/*POLE DE L'UTILISATEUR--*/
+/*POLE OU DEPARTEMENT DE L'UTILISATEUR--*/
 CREATE TABLE pole(
 id int PRIMARY KEY  auto_increment,
 code varchar(20),
 designation varchar(250)
 )ENGINE=InnoDB DEFAULT charset=utf8;
-/*--COHORTE DE L'UTILISATEUR S'IL DOIT AJOUTER SON MEMOIRE--*/
+/*--COHORTE DE L'UTILISATEUR S'IL DOIT AJOUTER SON MEMOIRE--
 CREATE TABLE cohorte(
 id int primary key auto_increment,
 nom_cohorte varchar(100)
 )ENGINE=InnoDB DEFAULT charset=utf8;
+*/
+
 /*--FILIERE DE L'UTILISATEUR--*/
 CREATE TABLE filiere(
 id int primary key auto_increment ,
@@ -43,7 +45,8 @@ ON UPDATE CASCADE;
 CREATE TABLE temoignage(
 id int primary key auto_increment,
 id_utilisateur int,
-libelle varchar(255)
+libelle varchar(255),
+aprobation varchar(3)
 )ENGINE=InnoDB DEFAULT charset=utf8;
 ALTER TABLE temoignage ADD CONSTRAINT fk_tem_ut FOREIGN KEY(id_utilisateur) REFERENCES utilisateur(id)
 ON UPDATE CASCADE;
@@ -61,10 +64,10 @@ annee_scolaire varchar(25)
 CREATE TABLE memoire(
 id int primary key auto_increment,
 id_utilisateur int
-nom_archive varchar(250),
-date_archivage DATE,
+nom_memoire varchar(250),
+date_memoire DATE,
 sujet varchar(250),
-fichier varchar(250),
+lien_memoire varchar(150),
 auteur varchar(250),
 createur varchar(250),
 mots_cles varchar(250)
@@ -72,6 +75,7 @@ mots_cles varchar(250)
 ALTER TABLE memoire Fk_memoire_utili ADD CONSTRAINT FOREIGN KEY(id_utilisateur) REFERENCES utilisateur(id) 
 ON UPDATE CASCADE;
 
+/* JOURNAL D'ACTIVITE*/
 CREATE TABLE journal(
 id int auto_increment primary key,
 id_utilisateur int,
