@@ -50,7 +50,7 @@
 
 <body>
    
-   <!--====== PRELOADER PART START ======-->
+   <!--====== ANIMATION ======-->
     
     <div class="preloader">
         <div class="loader rubix-cube">
@@ -65,9 +65,9 @@
         </div>
     </div>
     
-    <!--====== PRELOADER PART START ======-->
+    <!--====== FIN ANIMATION ======-->
    
-    <!--====== HEADER PART START ======-->
+    <!--====== DEBUT MENU ======-->
     
     <header id="header-part">        
         <div class="navigation navigation-2 navigation-3">
@@ -87,14 +87,14 @@
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul class="navbar-nav ml-auto">
                                     <li class="nav-item">
-                                        <a class="active" href="index.html">Accueil</a>
+                                        <a class="active" href="index.php">Accueil</a>
 										
                                     </li>
                                     <li class="nav-item">
-                                        <a href="apropos.html">A propos</a>
+                                        <a href="apropos.php">A propos</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="memoire.html">Mémoire</a>
+                                        <a href="memoire.php">Mémoire</a>
                                         
                                     </li>
                                     
@@ -119,23 +119,18 @@
         </div>
     </header>
     
-    <!--====== HEADER PART ENDS ======-->
-   
-    <!--====== SEARCH BOX PART START ======-->
-    
+    <!--====== FIN MENU  ======-->
    
     
-    <!--====== SEARCH BOX PART ENDS ======-->
    
-    <!--====== SLIDER PART START ======-->
+    <!--====== DEBUT RECHERCHE  ======-->
     
     <section id="slider-part-3" class="bg_cover"  style="background-image: url(include/images/slide/Uvs1.jpg)">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-10">
                     <div class="slider-cont-3 text-center">
-                        <h2>Rechercher un mémoire</h2>
-                        
+                        <h2>Rechercher un mémoire</h2>                    
                         <div class="slider-search mt-45">
                            <form action="#">
                                 <div class="row no-gutters">
@@ -199,13 +194,9 @@
     
     <!--====== SLIDER PART ENDS ======-->
     
-    <!--====== CATEGORY PART START ======-->
     
     
-    
-    <!--====== CATEGORY PART ENDS ======-->
-    
-    <!--====== COURSE PART START ======-->
+    <!--====== LISTE MEMOIRE ======-->
     
     <section id="course-part" class="pt-115 pb-115">
         <div class="container">
@@ -529,29 +520,16 @@
                                 <h6>Sitemap</h6>
                             </div>
                             <ul>
-                                <li><a href="index.html"><i class="fa fa-angle-right"></i>Accueil</a></li>
+                                <li><a href="index.php"><i class="fa fa-angle-right"></i>Accueil</a></li>
                                 <li><a href="#"><i class="fa fa-angle-right"></i>A Propos</a></li>
                                 <li><a href="#"><i class="fa fa-angle-right"></i>Mémoire</a></li>
-                                <li><a href=""><i class="fa fa-angle-right"></i>News</a></li>
-                                <li><a href=""><i class="fa fa-angle-right"></i>Event</a></li>
+                                <li><a href=""><i class="fa fa-angle-right"></i>Contact</a></li>
+                                
                             </ul>
                             
                         </div> <!-- footer link -->
                     </div>
-                    <div class="col-lg-2 col-md-6 col-sm-6">
-                        <div class="footer-link support mt-40">
-                            <div class="footer-title pb-25">
-                                <h6>Support</h6>
-                            </div>
-                            <ul>
-                                <li><a href="#"><i class="fa fa-angle-right"></i>FAQ</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i>Privacy</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i>Policy</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i>Support</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i>Documentation</a></li>
-                            </ul>
-                        </div> <!-- support -->
-                    </div>
+                    
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-address mt-40">
                             <div class="footer-title pb-25">
@@ -638,7 +616,7 @@
     
     <!--====== Counter Up js ======-->
     <script src="include/js/waypoints.min.js"></script>
-    <script src="includejs/jquery.counterup.min.js"></script>
+    <script src="include/js/jquery.counterup.min.js"></script>
     
     <!--====== Nice Select js ======-->
     <script src="include/js/jquery.nice-select.min.js"></script>

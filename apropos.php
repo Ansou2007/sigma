@@ -87,14 +87,14 @@
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul class="navbar-nav ml-auto">
                                     <li class="nav-item">
-                                        <a class="active" href="index.html">Accueil</a>
+                                        <a class="active" href="index.php">Accueil</a>
 										
                                     </li>
                                     <li class="nav-item">
-                                        <a href="apropos.html">A propos</a>
+                                        <a href="apropos.php">A propos</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="memoire.html">Mémoire</a>
+                                        <a href="memoire.php">Mémoire</a>
                                         
                                     </li>
                                     
@@ -133,7 +133,7 @@
                         <h2>A Propos</h2>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Accueil</a></li>
+                                <li class="breadcrumb-item"><a href="index.php">Accueil</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">A propos</li>
                             </ol>
                         </nav>
@@ -373,29 +373,16 @@
                                 <h6>Sitemap</h6>
                             </div>
                             <ul>
-                                <li><a href="index.html"><i class="fa fa-angle-right"></i>Accueil</a></li>
+                                <li><a href="index.php"><i class="fa fa-angle-right"></i>Accueil</a></li>
                                 <li><a href="#"><i class="fa fa-angle-right"></i>A Propos</a></li>
                                 <li><a href="#"><i class="fa fa-angle-right"></i>Mémoire</a></li>
-                                <li><a href="blog.html"><i class="fa fa-angle-right"></i>News</a></li>
-                                <li><a href="events.html"><i class="fa fa-angle-right"></i>Event</a></li>
+                                <li><a href="#"><i class="fa fa-angle-right"></i>Contact</a></li>
+                                
                             </ul>
                             
                         </div> <!-- footer link -->
                     </div>
-                    <div class="col-lg-2 col-md-6 col-sm-6">
-                        <div class="footer-link support mt-40">
-                            <div class="footer-title pb-25">
-                                <h6>Support</h6>
-                            </div>
-                            <ul>
-                                <li><a href="#"><i class="fa fa-angle-right"></i>FAQ</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i>Privacy</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i>Policy</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i>Support</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i>Documentation</a></li>
-                            </ul>
-                        </div> <!-- support -->
-                    </div>
+                    
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-address mt-40">
                             <div class="footer-title pb-25">
