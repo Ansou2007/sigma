@@ -75,7 +75,7 @@
                 <div class="row no-gutters">
                     <div class="col-lg-11 col-md-10 col-sm-9 col-9">
                         <nav class="navbar navbar-expand-lg">
-                            <a class="navbar-brand" href="index.html">
+                            <a class="navbar-brand" href="index.php">
                                 <img src="includes/images/logo-2.png" alt="Logo">
                             </a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -108,9 +108,8 @@
                     </div>
                     <div class="col-lg-1 col-md-2 col-sm-3 col-3">
                         <div class="right-icon text-right">
-                            <ul>
-                                
-                                <li><a href="#"><i class="fa fa-user"></i></a></li>
+                            <ul>                                
+                                <li><a href="login.php" ><i class="fa fa-user btn btn-success"></i></a></li>
                             </ul>
                         </div> <!-- right icon -->
                     </div>
@@ -342,7 +341,7 @@
             <div class="row align-items-center justify-content-center">
                 <div class="col-lg-6">
                     <div class="count-down-cont pt-50">
-                        <h3>NB: Seul les emails institutionnel sont autorisés</h3>
+                        <h3>NB: Seul les emails institutionnels sont autorisés</h3>
                         <h2>Inscription</h2>
                         
                     </div> <!-- count down cont -->
@@ -355,16 +354,16 @@
                         <div class="main-form">
                             <form action="#">
                                 <div class="singel-form">
-                                    <input type="text" placeholder="Votre Nom Complet">
+                                    <input type="text" placeholder="Votre Nom Complet" name="nom_complet">
                                 </div>
                                 <div class="singel-form">
-                                    <input type="email" placeholder="Votre  Mail institutionnel">
+                                    <input type="email" placeholder="Votre  Mail institutionnel" name="mail">
                                 </div>
                                 <div class="singel-form">
-                                    <input type="text" placeholder="téléphone">
+                                    <input type="text" placeholder="téléphone" name="telephone">
                                 </div>
                                 <div class="singel-form">
-                                    <button class="main-btn" type="button">Valider</button>
+                                    <button class="main-btn" type="submit" name="inscrire">Valider</button>
                                 </div>
                             </form>
                         </div>
