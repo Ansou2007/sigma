@@ -1,3 +1,9 @@
+<?php
+	if(isset($_POST['connexion'])){
+		header('location:accueil');
+	}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
   
@@ -60,7 +66,7 @@
 	
 	<div class="content clearfix">
 		
-		<form action="#" method="post">
+		<form action="" method="post">
 		
 			<h1 class="alert alert-success  text-center">Authentification</h1>		
 			
@@ -87,7 +93,7 @@
 					<label class="choice" for="Field">Se rappeler de moi</label>
 				</span>
 									
-				<button class="button btn btn-success btn-large">Connexion</button>
+				<button type="submit" name="connexion" class="button btn btn-success btn-large">Connexion</button>
 				
 			</div> <!-- .actions -->
 			

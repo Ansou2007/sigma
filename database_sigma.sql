@@ -5,6 +5,7 @@ CREATE DATABASE  IF NOT EXISTS sigma;
 USE sigma;
 
 /*POLE OU DEPARTEMENT DE L'UTILISATEUR--*/
+drop table if exists pole;
 CREATE TABLE pole(
 id int PRIMARY KEY  auto_increment,
 code varchar(20),
@@ -18,6 +19,7 @@ nom_cohorte varchar(100)
 */
 
 /*--FILIERE DE L'UTILISATEUR--*/
+drop table if exists filiere;
 CREATE TABLE filiere(
 id int primary key auto_increment ,
 id_pole int,
@@ -28,6 +30,7 @@ ALTER TABLE filiere ADD CONSTRAINT Fk_filiere_pole FOREIGN KEY(id_pole) REFERENC
 ON UPDATE CASCADE;
 
 /*--UTLISATEUR DE LA BASE-- */
+drop table if exists utilisateur;
 CREATE TABLE utilisateur(
 id int primary key auto_increment,
 id_filiere int,
@@ -42,6 +45,7 @@ ALTER TABLE utilisateur ADD CONSTRAINT Fk_filiere_utili FOREIGN KEY(id_filiere) 
 ON UPDATE CASCADE;
 
 /*-- TEMOIGNAGE---*/
+drop table if exists temoignage;
 CREATE TABLE temoignage(
 id int primary key auto_increment,
 id_utilisateur int,
@@ -54,6 +58,8 @@ ON UPDATE CASCADE;
 
 
 /*--ANNEE ACADEMIQUE DE L'UTILISATEUR--*/
+drop table if exists annee_academique;
+
 CREATE TABLE annee_academique(
 id int primary key auto_increment,
 annee varchar(10),
@@ -61,9 +67,10 @@ annee_scolaire varchar(25)
 )ENGINE=InnoDB DEFAULT charset=utf8;
 
 /*--TABLE CONTENANT LA LISTE DES MEMOIRES--*/
+drop table if exists memoire;
 CREATE TABLE memoire(
 id int primary key auto_increment,
-id_utilisateur int
+id_utilisateur int,
 nom_memoire varchar(250),
 date_memoire DATE,
 sujet varchar(250),
@@ -72,10 +79,11 @@ auteur varchar(250),
 createur varchar(250),
 mots_cles varchar(250)
 )ENGINE=InnoDB DEFAULT charset=utf8;
-ALTER TABLE memoire Fk_memoire_utili ADD CONSTRAINT FOREIGN KEY(id_utilisateur) REFERENCES utilisateur(id) 
+ALTER TABLE memoire ADD CONSTRAINT Fk_memoire_utili  FOREIGN KEY(id_utilisateur) REFERENCES utilisateur(id) 
 ON UPDATE CASCADE;
 
 /* JOURNAL D'ACTIVITE*/
+drop table if exists journal;
 CREATE TABLE journal(
 id int auto_increment primary key,
 id_utilisateur int,

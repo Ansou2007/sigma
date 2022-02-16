@@ -91,10 +91,10 @@
 										
                                     </li>
                                     <li class="nav-item">
-                                        <a href="apropos.php">A propos</a>
+                                        <a href="apropos">A propos</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="memoire.php">Mémoire</a>
+                                        <a href="memo">Mémoire</a>
                                         
                                     </li>
                                     

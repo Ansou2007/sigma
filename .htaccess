@@ -1,0 +1,15 @@
+RewriteEngine on
+
+RewriteRule ^index$ index.php
+RewriteRule ^accueil$ views/accueil.php
+
+#### FRONT-END ############
+RewriteRule ^contact$ FrontEnd/contact.php
+RewriteRule ^apropos$ FrontEnd/apropos.php
+RewriteRule ^memo$ FrontEnd/memo.php
+
+RewriteRule ^temoignage views/temoignage.php
+RewriteRule ^message views/message.php
+RewriteRule ^memoire views/memoire.php
+RewriteRule ^activite views/activite.php
+
