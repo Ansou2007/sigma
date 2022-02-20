@@ -8,8 +8,15 @@ RewriteRule ^contact$ FrontEnd/contact.php
 RewriteRule ^apropos$ FrontEnd/apropos.php
 RewriteRule ^memo$ FrontEnd/memo.php
 
-RewriteRule ^temoignage views/temoignage.php
-RewriteRule ^message views/message.php
-RewriteRule ^memoire views/memoire.php
-RewriteRule ^activite views/activite.php
+RewriteRule ^temoignage views/temoignage/temoignage.php
+RewriteRule ^traitement_temoignage.php views/temoignage/traitement_temoignage.php
+
+RewriteRule ^message views/message/message.php
+
+RewriteRule ^memoire views/memoire/memoire.php
+RewriteRule ^traitement_memoire views/memoire/traitement_memoire.php
+
+RewriteRule ^utilisateur views/utilisateur/utilisateur.php
+RewriteRule ^activation views/utilisateur/activation.php
+RewriteRule ^activite views/activite/activite.php
 

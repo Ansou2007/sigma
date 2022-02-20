@@ -3,87 +3,73 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>SIGMA</title>
-        <link type="text/css" href="<?php echo base_url ?>/include2/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <link type="text/css" href="<?php echo base_url ?>/include2/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
-        <link type="text/css" href="<?php echo base_url ?>/include2/css/theme.css" rel="stylesheet">
-        <link type="text/css" href="<?php echo base_url ?>/include2/images/icons/css/font-awesome.css" rel="stylesheet">
-        <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600'
-            rel='stylesheet'>
-    </head>
-    <body>
-        <div class="navbar navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-inverse-collapse">
-                        <i class="icon-reorder shaded"></i></a><a class="brand" href="index.html">SIGMA </a>
-                    <div class="nav-collapse collapse navbar-inverse-collapse">
-                        <ul class="nav nav-icons">
-                            <li class="active"><a href="#"><i class="icon-envelope"></i></a></li>
-                            <li><a href="#"><i class="icon-eye-open"></i></a></li>
-                            <li><a href="#"><i class="icon-bar-chart"></i></a></li>
-                        </ul>
-                        <form class="navbar-search pull-left input-append" action="#">
-                        <input type="text" class="span3">
-                        <button class="btn" type="button">
-                            <i class="icon-search"></i>
-                        </button>
-                        </form>
-                        <ul class="nav pull-right">                            
-                            <li><a href="#">Support </a></li>
-                            <li class="nav-user dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="images/user.png" class="nav-avatar" />
-                                <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Mon Profil</a></li>
-                                    <li><a href="#">Editer Profil</a></li>
-                                    <li><a href="#">Paramétre</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Déconnexion</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- /.nav-collapse -->
-                </div>
-            </div>
-            <!-- /navbar-inner -->
-        </div>
-        <!-- /navbar -->
-		
-        <div class="wrapper">
-            <div class="container">
-                <div class="row">
-                    <div class="span3">
-                        <div class="sidebar">
-                            <ul class="widget widget-menu unstyled">
-                                <li class="active"><a href="accueil"><i class="menu-icon icon-dashboard"></i>Tableau de Bord
-                                </a></li>
-                                <li><a href="memoire.php"><i class="menu-icon icon-bullhorn"></i>Mémoire </a>
-                                </li>
-                                <li><a href="message.php"><i class="menu-icon icon-inbox"></i>Message <b class="label green pull-right">
-                                    11</b> </a></li>
-                                <li><a href=""><i class="menu-icon icon-tasks"></i>Activité <b class="label orange pull-right">
-                                    19</b> </a></li>
-                            </ul>
-                            <!--/.widget-nav-->                            
-                            <ul class="widget widget-menu unstyled">
-                                <li><a href="temoignage.php"><i class="menu-icon icon-bold"></i> Témoignage </a></li>
-                                                                                 
-                            </ul>
-                            <!--/.widget-nav-->
-                            
-                        </div>
-                        <!--/.sidebar-->
-                    </div>
-                    <!--/.span3-->
-					
-                    <div class="span9">
-                        <div class="content">
-                            
-							
-                        
-        
+<meta charset="utf-8"/>
+<title>Gestion Des Mémoires</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link href="<?php echo base_url?>/include2/css/bootstrap.min.css" rel="stylesheet">
+<link href="<?php echo base_url?>/include2/css/bootstrap-responsive.min.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600"
+        rel="stylesheet">
+<link href="<?php echo base_url?>/include2/css/font-awesome.css" rel="stylesheet">
+<link href="<?php echo base_url?>/include2/css/style.css" rel="stylesheet">
+<link href="<?php echo base_url?>/css/pages2/dashboard.css" rel="stylesheet">
+<script src="<?php echo base_url?>/include2/js/jquery-1.7.2.min.js"></script> 
+
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top ">
+  <div class="navbar-inner">
+    <div class="container"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
+                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.php">SIGMA</a>
+      <div class="nav-collapse">
+        <ul class="nav pull-right">
+          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+                            class="icon-cog"></i> Mon Compte <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="">Paramétre</a></li>
+			  <li><a href="">Activité</a></li>
+              <li><a href="">Aide</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+                            class="icon-user"></i> Ansoumane Michel<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="">Profil</a></li>
+              <li><a href="">Déconnexion</a></li>
+            </ul>
+          </li>
+        </ul>       
+      </div>
+      <!--/.nav-collapse --> 
+    </div>
+    <!-- /container --> 
+  </div>
+  <!-- /navbar-inner --> 
+</div>
+<!-- /navbar -->
+<div class="subnavbar">
+  <div class="subnavbar-inner">
+    <div class="container">
+      <ul class="mainnav">
+        <li class="active"><a href="<?php echo base_url?>accueil"><i class="icon-dashboard"></i><span>Accueil</span> </a> </li>
+        <li class=""><a href="<?php echo base_url?>memoire" > <i class="icon-list-alt"></i><span>Mémoire</span> <b class="caret"></b></a>         
+        </li>
+		<li class=""><a href="<?php echo base_url?>temoignage" > <i class="icon-book"></i><span>Témoignage</span> <b class="caret"></b></a></li>       		
+        <li><a href="<?php echo base_url?>statistique"><i class="icon-bar-chart"></i><span>Statistique</span> </a> </li>
+		<li><a href="<?php echo base_url?>message"><i class="icon-envelope"></i><span>Message</span> </a> </li>       
+        <li class=""><a href="<?php echo base_url?>activite" > <i class="icon-long-arrow-down"></i><span>Activité</span> <b class="caret"></b></a>
+          
+        </li>
+      </ul>
+    </div>
+    <!-- /container --> 
+  </div>
+  <!-- /subnavbar-inner --> 
+</div>
+<!-- /subnavbar -->

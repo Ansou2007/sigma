@@ -91,14 +91,14 @@
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul class="navbar-nav ml-auto">
                                     <li class="nav-item">
-                                        <a class="active" href="index.php">Accueil</a>
+                                        <a  href="index.php">Accueil</a>
 										
                                     </li>
                                     <li class="nav-item">
                                         <a href="apropos">A propos</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="memo">Mémoire</a>
+                                        <a class="active" href="memo">Mémoire</a>
                                         
                                     </li>
                                     

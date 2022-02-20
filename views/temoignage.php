@@ -3,9 +3,15 @@ require_once('../configuration.php');
 
 include base_app.'/include2/header.php';
 ?>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-              Ajouter Témoignage
-</button>
+<style>
+#myModal{
+	width:400px;
+    height:auto;
+	max-height:100%;
+}
+
+</style>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Ajouter Témoignage</button>
 <br>
 </br>
 <!-- Modal -->
@@ -25,8 +31,9 @@ include base_app.'/include2/header.php';
 </form>
 </div>
  <div class="modal-footer">
-<button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
- <button class="btn btn-primary">Enregistrer</button>
+ <button class="btn btn-success">Enregistrer</button>
+<button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Fermer</button>
+ 
  </div>
 </div>
 													<!--FIN MODAL-->
@@ -50,8 +57,9 @@ include base_app.'/include2/header.php';
          </div>              
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-            <button type="submit" name="enregistrer" class="btn btn-primary">Enregistrer</button>
+			<button type="submit" name="enregistrer" class="btn btn-success">Enregistrer</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+            
         </div>
       </form>
 

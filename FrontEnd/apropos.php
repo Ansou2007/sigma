@@ -1,3 +1,14 @@
+<?php
+	require_once('../core/connection.php');
+	
+	$requete = $con->prepare('SELECT * FROM temoignage');
+	$requete->execute();
+	$temoignage = $requete->fetchAll();
+	
+	//print_r($temoignage);
+
+?>
+
 <!doctype html>
 <html lang="fr">
 
@@ -87,11 +98,11 @@
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul class="navbar-nav ml-auto">
                                     <li class="nav-item">
-                                        <a class="active" href="index.php">Accueil</a>
+                                        <a  href="index.php">Accueil</a>
 										
                                     </li>
                                     <li class="nav-item">
-                                        <a href="apropos">A propos</a>
+                                        <a class="active" href="apropos">A propos</a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="memo">Mémoire</a>
@@ -256,53 +267,28 @@
                     </div> <!-- section title -->
                 </div>
             </div> <!-- row -->
+			
             <div class="row testimonial-slied mt-40">
+			<?php foreach($temoignage as $temoignage){?>
                 <div class="col-lg-6">
                     <div class="singel-testimonial">
                         <div class="testimonial-thum">
-                            <img src="images/testimonial/t-1.jpg" alt="Testimonial">
+                            <img src="images/testimonial/t-1.jpg" alt="">
                             <div class="quote">
                                 <i class="fa fa-quote-right"></i>
                             </div>
                         </div>
+						
                         <div class="testimonial-cont">
-                            <p>Aliquetn sollicitudirem quibibendum auci elit cons equat ipsutis sem nibh id elit. Duis sed odio sit amet sem nibh id elit sollicitudirem </p>
-                            <h6>Rubina Helen</h6>
-                            <span>Bsc, Engineering</span>
+                            <p><?=$temoignage['libelle']?></p>
+                            <h6><?=$temoignage['id']?></h6>                           
                         </div>
+						
                     </div> <!-- singel testimonial -->
-                </div>
-                <div class="col-lg-6">
-                    <div class="singel-testimonial">
-                        <div class="testimonial-thum">
-                            <img src="images/testimonial/t-2.jpg" alt="Testimonial">
-                            <div class="quote">
-                                <i class="fa fa-quote-right"></i>
-                            </div>
-                        </div>
-                        <div class="testimonial-cont">
-                            <p>Aliquetn sollicitudirem quibibendum auci elit cons equat ipsutis sem nibh id elit. Duis sed odio sit amet sem nibh id elit sollicitudirem </p>
-                            <h6>Rubina Helen</h6>
-                            <span>Bsc, Engineering</span>
-                        </div>
-                    </div> <!-- singel testimonial -->
-                </div>
-                <div class="col-lg-6">
-                    <div class="singel-testimonial">
-                        <div class="testimonial-thum">
-                            <img src="images/testimonial/t-3.jpg" alt="Testimonial">
-                            <div class="quote">
-                                <i class="fa fa-quote-right"></i>
-                            </div>
-                        </div>
-                        <div class="testimonial-cont">
-                            <p>Aliquetn sollicitudirem quibibendum auci elit cons equat ipsutis sem nibh id elit. Duis sed odio sit amet sem nibh id elit sollicitudirem </p>
-                            <h6>Rubina Helen</h6>
-                            <span>Bsc, Engineering</span>
-                        </div>
-                    </div> <!-- singel testimonial -->
-                </div>
-            </div> <!-- testimonial slied -->
+                </div>               
+               <?php }?>
+            </div> <!-- temoignage slide -->
+			
         </div> <!-- container -->
     </section>
     
@@ -380,7 +366,7 @@
                                 
                             </ul>
                             
-                        </div> <!-- footer link -->
+                        </div> <!-- Pied de page  lien -->
                     </div>
                     
                     <div class="col-lg-3 col-md-6">
@@ -410,7 +396,7 @@
                                         <i class="fa fa-envelope-o"></i>
                                     </div>
                                     <div class="cont">
-                                        <p>ansou13@gmail.com</p>
+                                        <p>ansoumanemichel.tamba@uvs.edu.sn</p>
                                     </div>
                                 </li>
                             </ul>

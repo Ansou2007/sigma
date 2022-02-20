@@ -1,3 +1,78 @@
+<?php
+	session_start();
+	require_once('core/connection.php');	
+	require('PHPMailer/PHPMailer.php');	
+	require('PHPMailer/SMTP.php');
+	require('PHPMailer/Exception.php');
+	USE	PHPMailer\PHPMailer\PHPMailer;
+	USE	PHPMailer\PHPMailer\SMTP;
+	USE	PHPMailer\PHPMailer\Exception;
+
+	// Chargement Témoignage
+	$requete = $con->prepare('SELECT * FROM temoignage');
+	$requete->execute();
+	$temoignage = $requete->fetchAll();
+	
+	//print_r($temoignage);
+	// Chargement Mémoire
+	$requete = $con->prepare('SELECT * FROM memoire');
+	$requete->execute();
+	$memoire = $requete->fetchAll();
+	
+	//INSCRIPTION
+		$token = rand(1000000,9000000);
+	//echo $token;
+	if(isset($_POST['inscrire'])){
+		if(!empty($_POST['mail'])){
+			$email = $_POST['mail'];
+			$nom_complet = $_POST['nom_complet'];
+			$requete = $con->prepare("INSERT INTO utilisateur(nom_complet,email,token,etat) VALUES(?,?,?,?)");
+			$requete->execute(array($nom_complet,$email,$token,0));
+			
+			$recup = $con->prepare("SELECT * FROM utilisateur WHERE email=?");
+			$recup->execute(array($email));
+			if($recup->rowCount() >0 ){
+				$info_util = $recup->fetch();
+				$_SESSION['id'] = $info_util;
+				//code pour envoie message	
+$mail = new PHPMailer();
+$mail->isSMTP();
+//$mail->SMTPDebug = SMTP::DEBUG_SERVER;
+$mail->Host = 'smtp.gmail.com';
+//Whether to use SMTP authentication
+$mail->SMTPAuth = true;
+$mail->SMTPSecure = 'tls'; 
+$mail->Port = 587;
+//$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+//Username to use for SMTP authentication - use full email address for gmail
+$mail->Username = 'coursecoma@gmail.com';
+$mail->Password = 'promotion9';
+//Set the subject line
+$mail->Subject = 'Activation Compte';
+$mail->setFrom = 'coursecoma@gmail.com';
+//Set who the message is to be sent to
+//$mail->addAddress('ansoumanemichel.tamba@uadb.edu.sn', 'Michel');
+$mail->addAddress($email,'');
+//$mail->addAddress = $email;
+$mail->Body = 'Bonjour';
+$mail->smtpClose();
+
+//send the message, check for errors
+if (!$mail->send()) {
+    echo 'Mailer Error: ' . $mail->ErrorInfo;
+} else {
+    echo 'Message sent!';
+    
+}
+			//fin code	
+			}
+	
+    
+		}
+	}
+
+?>
+
 <!doctype html>
 <html lang="fr">
 
@@ -206,8 +281,11 @@
                         <h2>Mémoire </h2>
                     </div> <!-- section title -->
                 </div>
-            </div> <!-- row -->
+            </div> 
+			
             <div class="row course-slied mt-30">
+			
+			
                 <div class="col-lg-4">
                     <div class="singel-course-2">
                         <div class="thum">
@@ -222,25 +300,21 @@
                                 <div class="name">
                                     <a href="#"><h6>Michel</h6></a>
                                 </div>
-                                <div class="review">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
+                                
                             </div>
                         </div>
                         <div class="cont">
                             <a href="#"><h4>Learn basis javascirpt from start for beginner</h4></a>
                         </div>
-                    </div> <!-- singel course -->
+                    </div> 
                 </div>
+				<?php foreach($memoire as $memoire){ ?>
                 <div class="col-lg-4">
+				
                     <div class="singel-course-2">
+					
                         <div class="thum">
+						
                             <div class="image">
                                 <img src="include/images/memoire/pdf.png" height="300" width="100" alt="memoire">
                             </div>
@@ -250,82 +324,19 @@
                                     <a href="#"><img src="images/course/teacher/t-2.jpg" alt="teacher"></a>
                                 </div>
                                 <div class="name">
-                                    <a href="#"><h6>test</h6></a>
+                                    <a href="#"><h6><?=$memoire['auteur']?></h6></a>
                                 </div>
-                                <div class="review">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
+                               
                             </div>
                         </div>
                         <div class="cont">
-                            <a href="#"><h4>Learn basis javascirpt from start for beginner</h4></a>
+                            <a href="#"><h4><?=$memoire['sujet']?></h4></a>
                         </div>
                     </div> <!-- singel course -->
+					
                 </div>
-                <div class="col-lg-4">
-                    <div class="singel-course-2">
-                        <div class="thum">
-                            <div class="image">
-                                <img src="include/images/memoire/pdf.png" height="300" width="100" alt="memoire">
-                            </div>
-                            
-                            <div class="course-teacher">
-                                <div class="thum">
-                                    <a href=""><img src="images/course/teacher/t-3.jpg" alt="teacher"></a>
-                                </div>
-                                <div class="name">
-                                    <a href="#"><h6>Ansoumane</h6></a>
-                                </div>
-                                <div class="review">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cont">
-                            <a href="#"><h4>Learn basis javascirpt from start for beginner</h4></a>
-                        </div>
-                    </div> <!-- singel course -->
-                </div>
-                    <div class="singel-course-2">
-                        <div class="thum">
-                            <div class="image">
-                                <img src="include/images/memoire/pdf.png" height="300" width="100" alt="memoire">
-                            </div>
-                            
-                            <div class="course-teacher">
-                                <div class="thum">
-                                    <a href="courses-singel.html"><img src="images/course/teacher/t-4.jpg" alt="teacher"></a>
-                                </div>
-                                <div class="name">
-                                    <a href="#"><h6>Test</h6></a>
-                                </div>
-                                <div class="review">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cont">
-                            <a href="#"><h4>Learn basis javascirpt from start for beginner</h4></a>
-                        </div>
-                    </div> <!-- singel course -->
+					<?php }?>
+					
                 </div>
                 
             </div> <!-- course slied -->
@@ -352,15 +363,15 @@
                             <h3>S'inscrire</h3>                         
                         </div>
                         <div class="main-form">
-                            <form action="#">
+                            <form action="index.php" method="post">
                                 <div class="singel-form">
-                                    <input type="text" placeholder="Votre Nom Complet" name="nom_complet">
+                                    <input type="text" placeholder="Votre Nom Complet" id="nom_complet" name="nom_complet">
                                 </div>
                                 <div class="singel-form">
-                                    <input type="email" placeholder="Votre  Mail institutionnel" name="mail">
+                                    <input type="email" id="mail" name="mail" placeholder="Votre  Mail institutionnel" name="mail">
                                 </div>
                                 <div class="singel-form">
-                                    <input type="text" placeholder="téléphone" name="telephone">
+                                    <input type="text" placeholder="téléphone" name="telephone" id="telephone">
                                 </div>
                                 <div class="singel-form">
                                     <button class="main-btn" type="submit" name="inscrire">Valider</button>
@@ -391,10 +402,10 @@
                             <div class="col-md-6">
                                 <div class="teachers-2-singel mt-30">
                                     <div class="thum">
-                                        <img src="images/teachers/teacher-2/tc-1.jpg" alt="Teacher">
+                                        <img src="images/" alt="">
                                     </div>
                                     <div class="cont">
-                                        <a href="teachers-singel.html"><h5>Ansoumane</h5></a>
+                                        <a href=""><h5>Ansoumane</h5></a>
                                         <p>Développeur</p>                                       
                                     </div>
                                 </div> <!-- teachers 2 singel -->
@@ -402,11 +413,11 @@
                             <div class="col-md-6">
                                 <div class="teachers-2-singel mt-30">
                                     <div class="thum">
-                                        <img src="images/teachers/teacher-2/tc-2.jpg" alt="Teacher">
+                                        <img src="" alt="">
                                     </div>
                                     <div class="cont">
-                                        <a href="teachers-singel.html"><h5>Modou</h5></a>
-                                        <p>Tuteur</p>
+                                        <a href=""><h5>Khalifa SYLLA</h5></a>
+                                        <p>Encadreur</p>
                                         
                                     </div>
                                 </div> <!-- teachers 2 singel -->
@@ -414,7 +425,7 @@
                            
                             
                         </div> <!-- row -->
-                    </div> <!-- teachers 2 -->
+                    </div> 
                 </div>
                 <div class="col-lg-6 ">
                     <div class="happy-student mt-55">
@@ -422,29 +433,19 @@
                             <h3>Témoignage</h3>
                         </div>
                         <div class="student-slied">
-                            <div class="singel-student">
-                                <img src="include/images/teachers/teacher-2/quote.png" alt="Quote">
-                                <p>Aliquetn sollicitudirem quibibendum auci elit cons equat ipsutis sem nibh id elit. Duis sed odio sit amet</p>
-                                <h6>Mark anthem</h6>
-                                <span>Bsc, Engineering</span>
-                            </div> <!-- singel student -->
                             
+                            <?php foreach($temoignage as $temoignage){ ?>
                             <div class="singel-student">
-                                <img src="include/images/teachers/teacher-2/quote.png" alt="Quote">
-                                <p>Aliquetn sollicitudirem quibibendum auci elit cons equat ipsutis sem nibh id elit. Duis sed odio sit amet</p>
-                                <h6>Mark anthem</h6>
-                                <span>Bsc, Engineering</span>
+                                <img src="include/images/quote.png" alt="Quote">
+                                <p><?=$temoignage['libelle']?></p>
+                                <h6><?=$temoignage['id_utilisateur']?></h6>
+                                
                             </div> <!-- singel student -->
+                            <?php }?>
                             
-                            <div class="singel-student">
-                                <img src="include/images/teachers/teacher-2/quote.png" alt="Quote">
-                                <p>Aliquetn sollicitudirem quibibendum auci elit cons equat ipsutis sem nibh id elit. Duis sed odio sit amet</p>
-                                <h6>Mark anthem</h6>
-                                <span>Bsc, Engineering</span>
-                            </div> <!-- singel student -->
                         </div> <!-- student slied -->
                         <div class="student-image">
-                            <img src="include/images/teachers/teacher-2/happy.png" alt="Image">
+                            <img src="include/images/happy.png" alt="Image">
                         </div>
                     </div> <!-- happy student -->
                 </div>
@@ -639,6 +640,19 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDC3Ip9iVC0nIxC6V14CKLQ1HZNF_65qEQ"></script>
     <script src="include/js/map-script.js"></script>
 
+
+
+		<script>
+				function verifier(){
+	var extension = $('#mail').val().split('@').pop().toLowerCase();
+				if(jQuery.inArray(extension,['uvs.edu.sn','uadb.edu.sn','ucad.edu.sn']) == -1){
+					alert('Mail invalide');
+				}else{
+					alert('bravo');
+				}
+                }
+		
+		</script>
 </body>
 
 </html>
