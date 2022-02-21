@@ -1,13 +1,15 @@
 <?php
 	session_start();
-	require_once('core/connection.php');	
+	require_once('core/connection.php');
+	include('fonction.php');
+/*	
 	require('PHPMailer/PHPMailer.php');	
 	require('PHPMailer/SMTP.php');
 	require('PHPMailer/Exception.php');
 	USE	PHPMailer\PHPMailer\PHPMailer;
 	USE	PHPMailer\PHPMailer\SMTP;
 	USE	PHPMailer\PHPMailer\Exception;
-
+	*/
 	// Chargement Témoignage
 	$requete = $con->prepare('SELECT * FROM temoignage');
 	$requete->execute();
@@ -34,40 +36,29 @@
 			if($recup->rowCount() >0 ){
 				$info_util = $recup->fetch();
 				$_SESSION['id'] = $info_util;
-				//code pour envoie message	
-$mail = new PHPMailer();
-$mail->isSMTP();
-//$mail->SMTPDebug = SMTP::DEBUG_SERVER;
-$mail->Host = 'smtp.gmail.com';
-//Whether to use SMTP authentication
-$mail->SMTPAuth = true;
-$mail->SMTPSecure = 'tls'; 
-$mail->Port = 587;
-//$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-//Username to use for SMTP authentication - use full email address for gmail
-$mail->Username = 'coursecoma@gmail.com';
-$mail->Password = 'promotion9';
-//Set the subject line
-$mail->Subject = 'Activation Compte';
-$mail->setFrom = 'coursecoma@gmail.com';
-//Set who the message is to be sent to
-//$mail->addAddress('ansoumanemichel.tamba@uadb.edu.sn', 'Michel');
-$mail->addAddress($email,'');
-//$mail->addAddress = $email;
-$mail->Body = 'Bonjour';
-$mail->smtpClose();
-
-//send the message, check for errors
-if (!$mail->send()) {
-    echo 'Mailer Error: ' . $mail->ErrorInfo;
-} else {
-    echo 'Message sent!';
-    
-}
-			//fin code	
-			}
-	
-    
+				Envoimail($_POST['mail']);
+		/*	
+		$mail = new PHPMailer();
+		$mail->isSMTP();
+		$mail->Host = 'smtp.gmail.com';
+		$mail->SMTPAuth = true;
+		$mail->SMTPSecure = 'tls'; 
+		$mail->Port = 587;
+		$mail->Username = 'coursecoma@gmail.com';
+		$mail->Password = 'promotion9';
+		$mail->Subject = 'Activation Compte';
+		$mail->setFrom = 'coursecoma@gmail.com';		
+		$mail->addAddress($email,'');		
+		$mail->Body = 'Bonjour';
+		$mail->smtpClose();
+		if (!$mail->send()) {
+			echo 'Mailer Error: ' . $mail->ErrorInfo;
+		} else {
+			echo 'Message sent!';
+			
+		}
+			*///fin code	
+			}	   
 		}
 	}
 
@@ -304,7 +295,7 @@ if (!$mail->send()) {
                             </div>
                         </div>
                         <div class="cont">
-                            <a href="#"><h4>Learn basis javascirpt from start for beginner</h4></a>
+                            <a href="#"><h4>Test memoire</h4></a>
                         </div>
                     </div> 
                 </div>
@@ -363,19 +354,22 @@ if (!$mail->send()) {
                             <h3>S'inscrire</h3>                         
                         </div>
                         <div class="main-form">
+							<div id="info"></div>
                             <form action="index.php" method="post">
                                 <div class="singel-form">
                                     <input type="text" placeholder="Votre Nom Complet" id="nom_complet" name="nom_complet">
                                 </div>
                                 <div class="singel-form">
-                                    <input type="email" id="mail" name="mail" placeholder="Votre  Mail institutionnel" name="mail">
-                                </div>
+                                    <input type="email" id="mail" name="mail" autocomplete="off" placeholder="Votre  Mail institutionnel" name="mail">
+									<small id="small_mail"></small>
+								</div>
                                 <div class="singel-form">
                                     <input type="text" placeholder="téléphone" name="telephone" id="telephone">
                                 </div>
                                 <div class="singel-form">
                                     <button class="main-btn" type="submit" name="inscrire">Valider</button>
                                 </div>
+								
                             </form>
                         </div>
                     </div> <!-- category form -->
@@ -457,7 +451,7 @@ if (!$mail->send()) {
    
     
    
-    <!--====== PATNAR LOGO PART START ======-->
+    <!--====== PARTENAIRE LOGO PART START ======-->
     
     <div id="patnar-logo" class="pt-40 pb-80 gray-bg">
         <div class="container">
@@ -593,7 +587,7 @@ if (!$mail->send()) {
     <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
     
     <!--====== BACK TO TP PART ENDS ======-->
-   
+ 
     
     
     
@@ -640,19 +634,50 @@ if (!$mail->send()) {
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDC3Ip9iVC0nIxC6V14CKLQ1HZNF_65qEQ"></script>
     <script src="include/js/map-script.js"></script>
 
-
-
-		<script>
-				function verifier(){
-	var extension = $('#mail').val().split('@').pop().toLowerCase();
-				if(jQuery.inArray(extension,['uvs.edu.sn','uadb.edu.sn','ucad.edu.sn']) == -1){
-					alert('Mail invalide');
-				}else{
-					alert('bravo');
-				}
-                }
 		
-		</script>
+		<script type="text/javascript">
+   
+		   $(document).ready(function(){
+			   		   			   
+			   $("#mail").keyup(function(){
+				   
+				   var extension = $('#mail').val().split('@').pop().toLowerCase();
+				   
+				if(jQuery.inArray(extension,['uvs.edu.sn','uadb.edu.sn','ucad.edu.sn']) == -1){
+					$('#small_mail').html('<h4 class="alert alert-danger">Adresse mail Invalide</h4>').fadeIn().delay(500).fadeOut();					
+				}else{
+					var action = "verifier";	
+					$.ajax({
+						url: "traitement_activation.php",
+						type: "POST",
+						data:{
+							action :action,
+							email : $('#mail').val()
+						},
+						success:function(data){
+							if(data == "success"){
+								//$('#small_mail').html(data);
+							$('#small_mail').html('<h6 class="alert alert-danger">Le mail existe déja</h6>').fadeIn().delay(500).fadeOut();
+							
+							}else{
+								//$('#small_mail').html(data);
+								$('#small_mail').html('<h6 class="alert alert-success">Adresse mail Valide</h6>').fadeIn().delay(500).fadeOut();
+								return true;
+							}
+							
+						}
+						
+					});
+					//$('#small_mail').html('<h6 class="alert alert-success">Adresse mail Valide</h6>').fadeIn().delay(500).fadeOut();
+				}
+			   });
+			   })
+			  
+
+			  
+			   
+		  
+</script>
 </body>
 
 </html>

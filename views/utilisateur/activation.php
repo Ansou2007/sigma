@@ -1,6 +1,6 @@
 <?php
 	session_start();
-require_once('core/connection.php');
+require_once('../../core/connection.php');
 
 if(isset($_GET['id']) AND (!empty($_GET['id'])) AND isset($_GET['token']) AND !empty($_GET['token'])){
 	$id = $_GET['id'];

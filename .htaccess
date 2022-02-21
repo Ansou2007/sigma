@@ -18,5 +18,7 @@ RewriteRule ^traitement_memoire views/memoire/traitement_memoire.php
 
 RewriteRule ^utilisateur views/utilisateur/utilisateur.php
 RewriteRule ^activation views/utilisateur/activation.php
+RewriteRule ^traitement_activation.php views/utilisateur/traitement_activation.php
+
 RewriteRule ^activite views/activite/activite.php
 
