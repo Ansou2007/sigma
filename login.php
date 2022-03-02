@@ -1,6 +1,31 @@
+
 <?php
+	
+	require_once 'core/connection.php';
+	session_start();
 	if(isset($_POST['connexion'])){
-		header('location:accueil');
+		$mail = strip_tags(trim($_POST['mail']));
+		$motdepass = strip_tags($_POST['motdepasse']);
+		$query=$con->prepare('select * from utilisateur where email=?  ');
+		//$query->setFetchMode(PDO::FETCH_ASSOC);
+		$query->bindValue(1,$mail);
+		$query->execute();
+		$utilisateur=$query->fetch();
+		if(!password_verify($motdepass,$utilisateur['mot_pass']))
+		$erreur = "Login ou Mot de passe incorrecte";
+		
+		else{
+			if($utilisateur['etat']==="0" )
+			{
+				$erreur = "Votre compte n'est pas activé,Contacter l'administrateur";
+			}else{			
+			header('location:accueil');
+			$_SESSION['utilisateur'] = $utilisateur;
+			$_SESSION['time'] = time();
+			}
+		}
+		
+	
 	}
 ?>
 
@@ -68,7 +93,7 @@
 		
 		<form action="" method="post">
 		
-			<h1 class="alert alert-success  text-center">Authentification</h1>		
+			<h1 class="alert alert-success">Authentification</h1>		
 			
 			<div class="login-fields">
 				

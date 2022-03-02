@@ -1,4 +1,18 @@
-
+<?php
+		require_once base_app.'views/utilisateur/session.php';		
+		$id_login = $_SESSION['utilisateur']['id'];		
+		$nom_complet = $_SESSION['utilisateur']['nom_complet'];
+		/*
+		$id_departement = $_SESSION['utilisateur']['id_departement'];
+		$id_region = $_SESSION['utilisateur']['id_region'];
+		$login = $_SESSION['utilisateur']['login'];
+		$groupe = $_SESSION['utilisateur']['groupe'];
+		$role = $_SESSION['utilisateur']['role'];
+		$commune = $_SESSION['utilisateur']['nom_commune'];
+		$departement = $_SESSION['utilisateur']['nom_departement'];
+		$region = $_SESSION['utilisateur']['nom_region'];
+*/
+?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -38,10 +52,10 @@
             </ul>
           </li>
           <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
-                            class="icon-user"></i> Ansoumane Michel<b class="caret"></b></a>
+                            class="icon-user"></i><?php echo $nom_complet?><b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li><a href="">Profil</a></li>
-              <li><a href="">Déconnexion</a></li>
+              <li><a href="<?php echo base_url?>deconnexion">Déconnexion</a></li>
             </ul>
           </li>
         </ul>       

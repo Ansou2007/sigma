@@ -4,13 +4,13 @@ CREATE DATABASE  IF NOT EXISTS sigma;
 
 USE sigma;
 
-/*POLE OU DEPARTEMENT DE L'UTILISATEUR--*/
+/*POLE OU DEPARTEMENT DE L'UTILISATEUR--
 drop table if exists pole;
 CREATE TABLE pole(
 id int PRIMARY KEY  auto_increment,
 code varchar(20),
 designation varchar(250)
-)ENGINE=InnoDB DEFAULT charset=utf8;
+)ENGINE=InnoDB DEFAULT charset=utf8;*/
 
 /*CATEGORIE DU MEMOIRE*/
 drop table if exists categorie;
@@ -45,6 +45,14 @@ etat int
 /*ALTER TABLE utilisateur ADD CONSTRAINT Fk_pole_utili FOREIGN KEY(id_pole) REFERENCES pole(id) ON DELETE CASCADE ON UPDATE CASCADE;*/
 ALTER TABLE utilisateur ADD CONSTRAINT Fk_filiere_utili FOREIGN KEY(id_filiere) REFERENCES filiere(id) 
 ON UPDATE CASCADE;
+drop table if exists profil;
+CREATE TABLE profil(
+id int primary key auto_increment,
+universite varchar(250),
+photo blob,
+situation_matrimonial varchar(45),
+sexe varchar(8)
+)ENGINE=InnoDB DEFAULT charset=utf8;
 
 /*-- TEMOIGNAGE---*/
 drop table if exists temoignage;

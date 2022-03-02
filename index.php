@@ -2,14 +2,6 @@
 	session_start();
 	require_once('core/connection.php');
 	include('fonction.php');
-/*	
-	require('PHPMailer/PHPMailer.php');	
-	require('PHPMailer/SMTP.php');
-	require('PHPMailer/Exception.php');
-	USE	PHPMailer\PHPMailer\PHPMailer;
-	USE	PHPMailer\PHPMailer\SMTP;
-	USE	PHPMailer\PHPMailer\Exception;
-	*/
 	// Chargement Témoignage
 	$requete = $con->prepare('SELECT * FROM temoignage');
 	$requete->execute();
@@ -22,7 +14,9 @@
 	$memoire = $requete->fetchAll();
 	
 	//INSCRIPTION
-		$token = rand(1000000,9000000);
+		//$token = rand(1000000,9000000);
+        $token = uniqid(rand(100000,900000)) ;
+        //print_r($token);
 	//echo $token;
 	if(isset($_POST['inscrire'])){
 		if(!empty($_POST['mail'])){
@@ -36,28 +30,9 @@
 			if($recup->rowCount() >0 ){
 				$info_util = $recup->fetch();
 				$_SESSION['id'] = $info_util;
-				Envoimail($_POST['mail']);
-		/*	
-		$mail = new PHPMailer();
-		$mail->isSMTP();
-		$mail->Host = 'smtp.gmail.com';
-		$mail->SMTPAuth = true;
-		$mail->SMTPSecure = 'tls'; 
-		$mail->Port = 587;
-		$mail->Username = 'coursecoma@gmail.com';
-		$mail->Password = 'promotion9';
-		$mail->Subject = 'Activation Compte';
-		$mail->setFrom = 'coursecoma@gmail.com';		
-		$mail->addAddress($email,'');		
-		$mail->Body = 'Bonjour';
-		$mail->smtpClose();
-		if (!$mail->send()) {
-			echo 'Mailer Error: ' . $mail->ErrorInfo;
-		} else {
-			echo 'Message sent!';
+                $id = $info_util['id'];
+				Envoimail($_POST['mail'],$id,$token);
 			
-		}
-			*///fin code	
 			}	   
 		}
 	}
@@ -355,7 +330,7 @@
                         </div>
                         <div class="main-form">
 							<div id="info"></div>
-                            <form action="index.php" method="post">
+                            <form  method="post" >
                                 <div class="singel-form">
                                     <input type="text" placeholder="Votre Nom Complet" id="nom_complet" name="nom_complet">
                                 </div>
@@ -447,11 +422,11 @@
         </div> <!-- container -->
     </section>
     
-    <!--====== TEACHERS PART ENDS ======-->
+    <!--====== FIN TEMOIGNAGE  ======-->
    
     
    
-    <!--====== PARTENAIRE LOGO PART START ======-->
+    <!--====== PARTENAIRE LOGO  ======-->
     
     <div id="patnar-logo" class="pt-40 pb-80 gray-bg">
         <div class="container">
@@ -486,9 +461,9 @@
         </div> <!-- container -->
     </div> 
     
-    <!--====== PATNAR LOGO PART ENDS ======-->
+    <!--====== FIN PARTENAIRE LOGO  ======-->
    
-    <!--====== FOOTER PART START ======-->
+    <!--====== FOOTER  ======-->
     
     <footer id="footer-part">
         <div class="footer-top pt-40 pb-70">
@@ -580,7 +555,7 @@
         </div> <!-- footer copyright -->
     </footer>
     
-    <!--====== FOOTER PART ENDS ======-->
+    <!--======FIN FOOTER ======-->
    
     <!--====== BACK TO TP PART START ======-->
     
@@ -645,7 +620,8 @@
 				   
 				if(jQuery.inArray(extension,['uvs.edu.sn','uadb.edu.sn','ucad.edu.sn']) == -1){
 					$('#small_mail').html('<h4 class="alert alert-danger">Adresse mail Invalide</h4>').fadeIn().delay(500).fadeOut();					
-				}else{
+                    return true;
+                }else{
 					var action = "verifier";	
 					$.ajax({
 						url: "traitement_activation.php",
