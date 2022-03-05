@@ -2,16 +2,15 @@
 	require_once '../../configuration.php';
 	require_once base_app.'core/connection.php';
 
-if(!empty($_FILES)){
+if(isset($_POST['enregistrer'])){
+	if(!empty($_FILES)){
 	
 	//$id_utilisateur = 1;
-	$categorie = "informatique";
+	$categorie = "Droit";
 	$date = date('Y-m-d');
-	$sujet = "l'informatisation des memoire academiques";
-	$auteur = "ansoumane michel tamba";
-	$mots_cles = "informatique,memoire,academique";
-	
-	
+	$sujet = "la constitution du senegal";
+	$auteur = "Abdoulaye Diane";
+	$mots_cles = "droit,memoire,academique";
 	$document_name = $_FILES['document']['name'];
 	$document_tmp = $_FILES['document']['tmp_name'];
 	$document_destination = 'doc/'.$document_name;
@@ -35,3 +34,4 @@ if(!empty($_FILES)){
 		echo "Seul les fichiers pdf sont autorisé";
 	}
 }
+	}

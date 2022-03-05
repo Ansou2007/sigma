@@ -7,6 +7,9 @@ include base_app.'/include2/header.php';
 	$requete->execute();
 	$memoire = $requete->fetchAll();
 	//print_r($memoire);
+	$requet = $con->prepare("SELECT nom_categorie FROM categorie");
+	$requet->execute();
+	$categorie = $requet->fetchAll();
 ?>
 <div class="main">
   <div class="main-inner">
@@ -39,8 +42,12 @@ include base_app.'/include2/header.php';
          <div class="form-group">
 		 <label>Catégorie:</label>            
          <select name="categorie" id="categorie" class="form-control" >
-		  <option disabled>Choisir</option>
-			
+		  <option disabled selected>Choisir</option>
+			<?php foreach($categorie as $categorie){ ?>
+			<option 
+				value="<?=$categorie['nom_categorie']?>"><?php echo $categorie['nom_categorie']?>
+			</option>
+			<?php }?>
 		 </select>
          </div> 
 		 <div class="form-group">
@@ -144,7 +151,9 @@ include base_app.'/include2/header.php';
 </div> <!-- /main-inner -->
 
 </div> <!-- /main -->
+			<script>
 
+			</script>
 <?php
 include base_app.'/include2/footer.php';
 ?>

@@ -36,7 +36,10 @@
 			}	   
 		}
 	}
-
+		//NOMBRE FILIERE
+		$nombre_filiere = nbre_filiere();
+		$nombre_inscrit = nbre_inscrit();
+		$nombre_memoire = nbre_memoire();
 ?>
 
 <!doctype html>
@@ -200,7 +203,7 @@
                                 <img src="include/images/all-icon/man.png" alt="icon">
                             </div>
                             <div class="cont">
-                                <h3>5</h3>
+                                <h3><?=$nombre_inscrit?></h3>
                                 <span>Enrolement</span>
                             </div>
                         </div> <!-- singel slider feature -->
@@ -211,7 +214,7 @@
                                 <img src="include/images/all-icon/book.png" alt="icon">
                             </div>
                             <div class="cont">
-                                <h3>4</h3>
+                                <h3><?=$nombre_memoire?></h3>
                                 <span>Mémoire Disponible</span>
                             </div>
                         </div> <!-- singel slider feature -->
@@ -222,7 +225,7 @@
                                 <img src="include/images/all-icon/expert.png" alt="icon">
                             </div>
                             <div class="cont">
-                                <h3>4</h3>
+                                <h3><?=$nombre_filiere ?></h3>
                                 <span>Filiére</span>
                             </div>
                         </div> <!-- singel slider feature -->
@@ -251,7 +254,7 @@
 			
             <div class="row course-slied mt-30">
 			
-			
+				<?php foreach($memoire as $memoire){ ?>
                 <div class="col-lg-4">
                     <div class="singel-course-2">
                         <div class="thum">
@@ -261,51 +264,47 @@
                             
                             <div class="course-teacher">
                                 <div class="thum">
-                                    <a href="#"><img src="images/course/teacher/t-1.jpg" alt="teacher"></a>
+                                    <a href="#"><img src="images/" alt="photo"></a>
                                 </div>
                                 <div class="name">
-                                    <a href="#"><h6>Michel</h6></a>
+                                    <a href="#"><h6><?=$memoire['auteur']?></h6></a>
                                 </div>
                                 
                             </div>
                         </div>
                         <div class="cont">
-                            <a href="#"><h4>Test memoire</h4></a>
+                            <a href="#"><h4><?=$memoire['sujet']?></h4></a>
                         </div>
                     </div> 
                 </div>
-				<?php foreach($memoire as $memoire){ ?>
-                <div class="col-lg-4">
-				
-                    <div class="singel-course-2">
-					
-                        <div class="thum">
-						
+					<?php }?>
+				<!--
+                <div class="col-lg-4">				
+                    <div class="singel-course-2">					
+                        <div class="thum">						
                             <div class="image">
                                 <img src="include/images/memoire/pdf.png" height="300" width="100" alt="memoire">
-                            </div>
-                            
+                            </div>                            
                             <div class="course-teacher">
                                 <div class="thum">
-                                    <a href="#"><img src="images/course/teacher/t-2.jpg" alt="teacher"></a>
+                                    <a href="#"><img src="images/" alt="photo"></a>
                                 </div>
                                 <div class="name">
-                                    <a href="#"><h6><?=$memoire['auteur']?></h6></a>
+                                    <a href="#"><h6>Test memoire</h6></a>
                                 </div>
                                
                             </div>
                         </div>
                         <div class="cont">
-                            <a href="#"><h4><?=$memoire['sujet']?></h4></a>
+                            <a href="#"><h4>Michel</h4></a>
                         </div>
-                    </div> <!-- singel course -->
-					
-                </div>
-					<?php }?>
+                    </div> 				
+                </div>-->
+				
 					
                 </div>
                 
-            </div> <!-- course slied -->
+            </div> 
         </div> <!-- container -->
     </section>
     
