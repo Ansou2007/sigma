@@ -45,6 +45,8 @@ etat int
 /*ALTER TABLE utilisateur ADD CONSTRAINT Fk_pole_utili FOREIGN KEY(id_pole) REFERENCES pole(id) ON DELETE CASCADE ON UPDATE CASCADE;*/
 ALTER TABLE utilisateur ADD CONSTRAINT Fk_filiere_utili FOREIGN KEY(id_filiere) REFERENCES filiere(id) 
 ON UPDATE CASCADE;
+
+/*--PROFIL---*/
 drop table if exists profil;
 CREATE TABLE profil(
 id int primary key auto_increment,
@@ -82,6 +84,7 @@ drop table if exists memoire;
 CREATE TABLE memoire(
 id int primary key auto_increment,
 id_utilisateur int,
+numero_depot varchar(150),
 categorie varchar(250),
 date_memoire DATE,
 sujet varchar(250),

@@ -2,6 +2,7 @@
 require_once('../../configuration.php');
 require_once base_app.'/core/connection.php';
 include base_app.'/include2/header.php';
+//header('Content-type: application/pdf');
 
 	$requete = $con->prepare("SELECT * FROM memoire");
 	$requete->execute();
@@ -19,40 +20,40 @@ include base_app.'/include2/header.php';
 	  <div class="widget">
 	  <div class="widget-content">	
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#memoire">Ajouter Mémoire</button>
+<button type="button" class="btn btn-primary" name="add" id="add">Ajouter</button>
 <br>
 </br>
 	
 <!--MODAL-->		
-	<div class="modal hide fade" tabindex="-1" id="memoire"  role="dialog"  aria-hidden="true">
-	<div class="modal-dialog">
-    <div class="modal-content">
+	<div class="modal fade" tabindex="-1" id="memoire"  role="dialog"  aria-hidden="true">
+	<div class="modal-dialog">    
       <div class="modal-header">
-	  <div id="alerte"></div>
+	  
         <h5 class="modal-title">Mémoire</h5>
+		<div id="alerte"></div>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
     <!--FORM AJOUT DECLARATION-->
-      <form action="traitement_memoire" method="POST" enctype="multipart/form-data">
+      <form id="formulaire"  method="POST" enctype="multipart/form-data">
         <div class="modal-body">
-		<input type="hidden" name="id_utilisateur" id="id_utilisateur" value="1">     
-        
+		<input type="hidden" name="id_utilisateur" id="id_utilisateur" value="<?=$id_utilisateur?>">  
+		<input type="hidden" name="action" id="action" value="ajout"/>  
          <div class="form-group">
 		 <label>Catégorie:</label>            
-         <select name="categorie" id="categorie" class="form-control" >
+         <select name="categorie" id="categorie" class="form-control">
 		  <option disabled selected>Choisir</option>
 			<?php foreach($categorie as $categorie){ ?>
 			<option 
-				value="<?=$categorie['nom_categorie']?>"><?php echo $categorie['nom_categorie']?>
+				value="<?=$categorie['nom_categorie']?>"><?php echo utf8_encode($categorie['nom_categorie'])?>
 			</option>
 			<?php }?>
 		 </select>
          </div> 
 		 <div class="form-group">
 			<label>Sujet</label>
-			<textarea name="sujet" id="sujet" class="form-control" required></textarea>
+			<textarea name="sujet" id="sujet" class="form-control" ></textarea>
 		 </div>
 		 <div class="control-group ">
 		<label>Etes-vous l'auteur du mémoire ? (Oui ou Non)</label>			
@@ -69,22 +70,23 @@ include base_app.'/include2/header.php';
 		 </div>
 		 <div class="form-group ">
 			<label>Mots Clés:</label>
-			<textarea name="mots_cles" id="mots_cles" class="form-control"></textarea>
+			<textarea name="mot_cle" id="mot_cle" class="form-control"></textarea>
 		 </div>
 		 <div class="form-group ">
 			<label>Document:</label>
-			<input type="file" name="document" id="document" class="form-control" required>
+			<input type="file" name="document" id="document" class="form-control" >
 		 </div>
         </div>
         <div class="modal-footer">
-			<button type="submit"  name="enregistrer" class="btn btn-success">Enregistrer</button>
+			<!--<button type="submit" name="enregistrer" id="enregistrer"  class="btn btn-success">Enregistrer</button>-->
+			<input type="submit" name="enregistrer" id="enregistrer" value="ajout" class="btn btn-success">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
             
         </div>
       </form>
 
     
-  </div>
+  
 </div>
 </div>
 <!--FIN MODAL-->	
@@ -92,49 +94,9 @@ include base_app.'/include2/header.php';
    <div class="module-head">
       <h3>Liste Mémoire</h3></div>
         <div class="module-body">
-            <table class="table table-striped">
-				 <thead>
-					<tr>
-						
-						<th>Catégorie</th>						
-						<th>Date Publication</th>
-						<th>Sujet</th>
-						<th>lien</th>
-						<th>Auteur</th>
-						<th>Mots Clés</th>
-						<th>Modfifier</th>
-						<th>Supprimer</th>
-					</tr>
-				</thead>
-				<tbody>
-				<?php foreach($memoire as $memoire){ ?>
-					
-				
-				<tr>
-					<td><?=$memoire['categorie']?></td>
-					<td><?=$memoire['date_memoire']?></td>
-					<td><?=$memoire['sujet']?></td>
-					<!--<td><a href="<?php //echo base_url.'views/memoire/'.$memoire['lien_memoire']?>" target="_blank">Voir</a></td> -->
-					<td><a href="<?php echo base_url.'views/memoire/'.$memoire['lien_memoire']?>" target="_blank">Voir</a></td>		
-					<td><?=$memoire['auteur']?></td>
-					<td><?=$memoire['mots_cles']?></td>
-					
-					<td>
-					<form action="" method="post">
-                    <input type="hidden" name="edit_id" value="">
-                    <button  type="submit" name="edit_btn" class="btn btn-success">Modifier</button>
-					</form>
-					</td>
-					<td>
-					<form action="" method="post">
-                    <input type="hidden" name="delete_id" value="">
-                    <button  type="submit" name="delete_btn" class="btn btn-danger">Supprimer</button>
-					</form>
-					</td>
-					</tr>		
-				<?php }		?>
-					</tbody>
-					</table>
+            <table class="table table-striped" id="donnees">
+				 
+			</table>
         </div>
 </div>
 
@@ -151,9 +113,94 @@ include base_app.'/include2/header.php';
 </div> <!-- /main-inner -->
 
 </div> <!-- /main -->
-			<script>
+<script>
 
-			</script>
+	Liste();
+	/*----------AJOUT--------------*/
+$('#add').click(function(){
+	$('#memoire').modal('show');
+	$('#formulaire')[0].reset();
+	$('.modal-title').text("Ajout Mémoire");
+	$('#action').val('ajout');
+	$('#enregistrer').val('Ajout');
+});
+	$('#formulaire').submit(function(event){
+		event.preventDefault();				
+				var categorie = $('#categorie').val();
+				var sujet = $('#sujet').val();
+				var mot_cle = $('#mot_cle').val();
+				var id_utilisateur = $('#id_utilisateur').val();
+				var document = $('#document').val();
+				 
+				$.ajax({
+					url: "traitement_memoire.php",
+					type:"POST",
+					data:new FormData(this),
+					contentType: false,
+					processData: false,
+						success:function(data){							
+							$('#alerte').html(data).fadeIn().delay(1000).fadeOut();
+							$('#formulaire')[0].reset();
+							Liste();
+						}
+					
+				});
+		
+		
+	});
+/*----------FIN AJOUT--------------*/
+
+
+/*----------CHARGEMENT--------------*/
+function Liste(){
+	var action = "liste_memoire";
+	
+	$.ajax({
+		url: "traitement_memoire",
+		type: "POST",
+		data: {action :action},
+		success:function(data){
+			$('#donnees').html(data);
+		}
+	});
+}
+/*----------FIN CHARGEMENT--------------*/
+
+	$(document).on('click','.editer',function(e){				
+				e.preventDefault();
+				var id_memoire = $(this).attr('id');
+				
+				$('#action').val("editer");
+				$('.modal-title').text('editer');
+				$('#enregistrer').val('Modifier');
+				$('#memoire').modal('show');
+				
+								
+		});
+			/*---------------SUPPRESSION-------------------*/
+			$(document).on('click','.supprimer',function(e){
+				e.preventDefault();
+				var action = "supprimer";
+				var id_memoire = $(this).attr('id');				
+				if(confirm("Voulez-vous supprimer le mémoire ?")){				
+					$.ajax({
+						url: "traitement_memoire.php",
+						type: "POST",
+						data :{
+							id_memoire :id_memoire,
+							action :action
+						},success:function(data){							
+							Liste();
+							alert('suppression avec success');
+						}
+					});
+					
+				}else{
+					
+				}
+			});
+			/*---------------FIN SUPPRESSION-------------------*/
+</script>
 <?php
 include base_app.'/include2/footer.php';
 ?>

@@ -1,6 +1,6 @@
 <?php
 		require_once base_app.'views/utilisateur/session.php';		
-		$id_login = $_SESSION['utilisateur']['id'];		
+		$id_utilisateur = $_SESSION['utilisateur']['id'];		
 		$nom_complet = $_SESSION['utilisateur']['nom_complet'];
 		/*
 		$id_departement = $_SESSION['utilisateur']['id_departement'];

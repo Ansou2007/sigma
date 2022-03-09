@@ -15,10 +15,11 @@ RewriteRule ^message views/message/message.php
 
 RewriteRule ^memoire views/memoire/memoire.php
 RewriteRule ^traitement_memoire views/memoire/traitement_memoire.php
+RewriteRule ^lecture.php views/memoire/lecture.php?id=$1 [QSA]
 
 RewriteRule ^utilisateur views/utilisateur/utilisateur.php
 RewriteRule ^deconnexion views/utilisateur/deconnexion.php
-RewriteRule ^activation.php views/utilisateur/activation.php?id=$1&token=$2 [QSA]
+RewriteRule ^activation.php views/utilisateur/activation.php?id=$1&token=$2 
 RewriteRule ^traitement_activation.php views/utilisateur/traitement_activation.php
 
 RewriteRule ^activite views/activite/activite.php

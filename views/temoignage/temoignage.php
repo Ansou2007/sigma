@@ -3,23 +3,9 @@ require_once('../../configuration.php');
 require_once base_app.'/core/connection.php';
 include base_app.'/include2/header.php';
 
-	$requete = $con->prepare("SELECT * FROM temoignage");
-	$requete->execute();
-	$temoignage = $requete->fetchAll();
-	
-	//print_r($temoignage);
-	
 	
 ?>
-<style>
-#myModal{
-	width:400px;
-    height:auto;
-	max-height:100%;
-	background-color: white;
-}
 
-</style>
 <div class="main">
   <div class="main-inner">
     <div class="container">
@@ -28,11 +14,11 @@ include base_app.'/include2/header.php';
 	  <div class="widget">
 	  <div class="widget-content">
 
-
+<button type="button" id="test" role="button" data-toggle="modal">Test</button>
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#temoignage">Ajouter Témoignage</button>
 <br>
 </br>
-
+	
 												
 <!--MODAL-->		
 	<div class="modal hide fade" tabindex="-1" id="temoignage"  role="dialog"  aria-hidden="true">
@@ -48,7 +34,7 @@ include base_app.'/include2/header.php';
     <!--FORM AJOUT DECLARATION-->
       <form action="ajout_temoignage" method="POST">
         <div class="modal-body">
-		<input type="hidden" name="id_utilisateur" id="id_utilisateur" value="1">     
+		<input type="hidden" name="id_utilisateur" id="id_utilisateur" >     
         <label>Votre Témoignage:</label>
          <div class="form-group">            
          <textarea name="message" id="message" required class="form-control"></textarea>
@@ -56,8 +42,7 @@ include base_app.'/include2/header.php';
         </div>
         <div class="modal-footer">
 			<button type="button" onclick="AjouterTemoignage()" name="enregistrer" class="btn btn-success">Enregistrer</button>
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
-            
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>           
         </div>
       </form>
 
@@ -69,38 +54,9 @@ include base_app.'/include2/header.php';
    <div class="module-head">
       <h3>Témoignage</h3></div>
         <div class="module-body">
-            <table class="table table-striped">
-				 <thead>
-					<tr>
-						<th>Date</th>
-						<th>Message</th>		
-						<th>Approbation</th> 	
-						<th width="15%">Modifier </th>
-						<th width="15%">Supprimer </th>
-					</tr>
-				</thead>
-				<tbody>
-				<?php foreach($temoignage as $temoignage){ ?>
-				<tr>
-					<td><?=$temoignage['date_publication']?></td>
-					<td><?=$temoignage['libelle']?></td>
-					<td><?=$temoignage['approbation']?></td>					
-					<td>
-					<form action="" method="post">
-                    <input type="hidden" name="id" value="<?=$temoignage['id']?>">
-                    <button  type="submit" name="edit_btn" class="btn btn-success">Modifier</button>
-					</form>
-					</td>
-					<td>
-					<!--<form action="traitement_temoignage.php" method="post">-->
-                    <input type="hidden" name="id" id="id" value="<?=$temoignage['id']?>">			
-                    <button  type="submit" onclick="Supprimer()" name="action" class="btn btn-danger">Supprimer</button>
-					<!--</form>-->
-					</td>
-				</tr>
-				<?php } ?>
-					</tbody>
-					</table>
+            <table class="table table-striped" id="donnees">
+				 
+			</table>
         </div>
 </div>
 
@@ -118,7 +74,16 @@ include base_app.'/include2/header.php';
 
 </div> <!-- /main -->
 <script>
+/*	$(document).ready(function(){
 			
+				alert('coucou');
+			*/
+		liste_temoignage();	
+			$('#test').click(function(){
+				$('#temoignage').modal('show');
+			});
+	
+		
 			function AjouterTemoignage(){
 				var action = "ajouter"
 				var id_utilisateur = $('#id_utilisateur').val();
@@ -138,9 +103,9 @@ include base_app.'/include2/header.php';
 						$('#message').val("");
 						$('#id_utilisateur').val("");
 						$('#alerte').html('<h4 class="alert alert-success">Ajout avec success</h4>').fadeIn().delay(500).fadeOut();
-						
+						liste_temoignage();
 					}
-				})
+				});
 				}
 				
 			}
@@ -148,8 +113,7 @@ include base_app.'/include2/header.php';
 			function Supprimer(){
 				
 				var action = "supprimer";
-				var id = $('#id').val();
-				
+				var id = $('#id_temoignage').val();				
 				$.ajax({
 					url:"traitement_temoignage.php",
 					type: "POST",
@@ -160,8 +124,50 @@ include base_app.'/include2/header.php';
 					success:function(data){
 						alert('supprimer avec success');
 					}
-				})
+				});
 			}
+			
+		function liste_temoignage(){
+					var action = "liste_temoignage";
+					$.ajax({
+						url: "traitement_temoignage.php",
+						type: "POST",
+						data: {
+							action :action
+						},
+						success:function(data){
+							$('#donnees').html(data);
+						}
+						
+					});
+				}
+			
+	
+		$(document).on('click','.editer',function(){
+			
+			var action = "editer";
+			var id = $(this).attr("id");
+			$.ajax({
+				url: "traitement_temoignage.php",
+				type: "POST",
+				dataType: "json",
+				data:{
+					id :id,
+					action :action
+					},
+					success:function(data){
+						//console.log("success");
+						
+						$('#message').val(data.message);
+						$('#id_utilisateur').val(id);
+						$('#temoignage').modal('show');
+						
+					}
+			})
+		});
+	
+			
+	/*		})*/
 </script>
 <?php
 include base_app.'/include2/footer.php';
