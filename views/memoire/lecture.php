@@ -2,14 +2,15 @@
 require_once('../../configuration.php');
 require_once base_app.'/core/connection.php';
 
-if(isset($_GET['id'])){
-	$id = $_GET['id'];
-	$requete = $con->prepare("SELECT * FROM memoire WHERE id=?");
-	$requete->execute(array($id));
+if(isset($_GET['code'])){
+	$code = $_GET['code'];
+	$requete = $con->prepare("SELECT * FROM memoire WHERE numero_depot=?");
+	$requete->execute(array($code));
 	
 	if($requete->rowCount() >0 ){
 		$resultat = $requete->fetch();
 		$fichier = $resultat['lien_memoire'];
+		//$mail = $resultat['email'];
 		
 		echo $rendu = '			
 			<!doctype html>
@@ -21,7 +22,7 @@ if(isset($_GET['id'])){
 			<body >
 			<div class="container" oncontextmenu="return false" onselectstart="return false" onMouseOver="window.status="desole";return false;">
 				
-				<embed oncontextmenu="return false"  src="'.base_url.'/views/memoire/'.$fichier.'#toolbar=0" type="application/pdf" width="100%" height="600px" />
+				<embed oncontextmenu="return false"  src="'.base_url.'views/memoire/'.$fichier.'#toolbar=0" type="application/pdf" width="100%" height="600px" />
 			
 				
 			
@@ -32,7 +33,8 @@ if(isset($_GET['id'])){
 		
 		';
 	}else{
-		echo "Aucun memoire";
+		header('location:memoire');
+		//echo "Aucun memoire";
 	}
 }
 ?>

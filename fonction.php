@@ -1,8 +1,9 @@
 <?php
-	require('PHPMailer/PHPMailer.php');	
+
+	require('configuration.php');
+	/*	require('PHPMailer/PHPMailer.php');	
 	require('PHPMailer/SMTP.php');
 	require('PHPMailer/Exception.php');
-	require('configuration.php');
 	USE	PHPMailer\PHPMailer\PHPMailer;
 	USE	PHPMailer\PHPMailer\SMTP;
 	USE	PHPMailer\PHPMailer\Exception;
@@ -29,7 +30,7 @@
 			
 		}
 	}
-	
+	*/
 	function nbre_filiere()
 {
     global $con;

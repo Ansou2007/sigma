@@ -15,10 +15,11 @@
 	
 	//INSCRIPTION
 		//$token = rand(1000000,9000000);
-        $token = uniqid(rand(100000,900000)) ;
-        //print_r($token);
-	//echo $token;
-	if(isset($_POST['inscrire'])){
+       // $token = uniqid(rand(100000,900000)) ;
+	   /*
+		$token = strtoupper(substr(md5(uniqid()),0,4)).date('dy');
+        
+	if($_POST['action'] == "inscription"){
 		if(!empty($_POST['mail'])){
 			$email = $_POST['mail'];
 			$nom_complet = $_POST['nom_complet'];
@@ -32,10 +33,13 @@
 				$_SESSION['id'] = $info_util;
                 $id = $info_util['id'];
 				Envoimail($_POST['mail'],$id,$token);
+				
+				echo "<h4 class='alert alert-success'>Réussie ! Un Mail vous est envoyé pour confirmation</h4>";
 			
 			}	   
 		}
 	}
+	*/
 		//NOMBRE FILIERE
 		$nombre_filiere = nbre_filiere();
 		$nombre_inscrit = nbre_inscrit();
@@ -328,9 +332,12 @@
                             <h3>S'inscrire</h3>                         
                         </div>
                         <div class="main-form">
-							<div id="info"></div>
-                            <form  method="post" >
+							<div id="info" title="Information">
+								
+							</div>
+                            <form   id="form_inscription" onsubmit="return false">
                                 <div class="singel-form">
+									<input type="hidden" name="action" id="action" value="inscription">
                                     <input type="text" placeholder="Votre Nom Complet" id="nom_complet" name="nom_complet">
                                 </div>
                                 <div class="singel-form">
@@ -341,7 +348,7 @@
                                     <input type="text" placeholder="téléphone" name="telephone" id="telephone">
                                 </div>
                                 <div class="singel-form">
-                                    <button class="main-btn" type="submit" name="inscrire">Valider</button>
+                                    <button class="main-btn" type="submit" id="inscrire" name="inscrire">Valider</button>
                                 </div>
 								
                             </form>
@@ -561,17 +568,13 @@
     <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
     
     <!--====== BACK TO TP PART ENDS ======-->
- 
-    
-    
-    
-    
-    
-    
+  
     
     <!--====== jquery js ======-->
     <script src="include/js/vendor/modernizr-3.6.0.min.js"></script>
-    <script src="include/js/vendor/jquery-1.12.4.min.js"></script>
+   <script src="include/js/vendor/jquery-1.12.4.min.js"></script> 
+	 <!--<script src="include/js/vendor/jquery-1.7.2.min"></script>-->
+	
 
     <!--====== Bootstrap js ======-->
     <script src="include/js/bootstrap.min.js"></script>
@@ -598,20 +601,18 @@
     <!--====== Validator js ======-->
     <script src="include/js/validator.min.js"></script>
     
-    <!--====== Ajax Contact js ======-->
-    <script src="include/js/ajax-contact.js"></script>
-    
+   
     <!--====== Main js ======-->
     <script src="include/js/main.js"></script>
     
-    <!--====== Map js ======-->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDC3Ip9iVC0nIxC6V14CKLQ1HZNF_65qEQ"></script>
-    <script src="include/js/map-script.js"></script>
+ 
 
 		
-		<script type="text/javascript">
+<script>
    
-		   $(document).ready(function(){
+  
+   
+	/*$(document).ready(function(){
 			   		   			   
 			   $("#mail").keyup(function(){
 				   
@@ -619,7 +620,7 @@
 				   
 				if(jQuery.inArray(extension,['uvs.edu.sn','uadb.edu.sn','ucad.edu.sn']) == -1){
 					$('#small_mail').html('<h4 class="alert alert-danger">Adresse mail Invalide</h4>').fadeIn().delay(500).fadeOut();					
-                    return true;
+                    return false;
                 }else{
 					var action = "verifier";	
 					$.ajax({
@@ -633,7 +634,7 @@
 							if(data == "success"){
 								//$('#small_mail').html(data);
 							$('#small_mail').html('<h6 class="alert alert-danger">Le mail existe déja</h6>').fadeIn().delay(500).fadeOut();
-							
+							return false;
 							}else{
 								//$('#small_mail').html(data);
 								$('#small_mail').html('<h6 class="alert alert-success">Adresse mail Valide</h6>').fadeIn().delay(500).fadeOut();
@@ -646,12 +647,40 @@
 					//$('#small_mail').html('<h6 class="alert alert-success">Adresse mail Valide</h6>').fadeIn().delay(500).fadeOut();
 				}
 			   });
-			   })
+			   
 			  
 
-			  
-			   
-		  
+			*/  
+			   $('#form_inscription').submit(function(e){
+				   e.preventDefault();
+				   var action = $('#action').val();
+				   var nom_complet = $('#nom_complet').val();
+				   var mail = $('#mail').val();
+				   var telephone = $('#telephone').val();
+				   
+				   if(nom_complet == '' || mail == '' || telephone == ''){
+					   $('#info').html("<h4 class='alert alert-danger'>Tous les champs doivent etre remplies</h4>").fadeIn(500).fadeOut(1000) ;
+					  
+				   }else{
+					   $.ajax({
+						   url: "traitement_inscription.php",
+						   type: "POST",
+						   data: {
+							   action :action,
+							   nom_complet :nom_complet,
+							   mail :mail,
+							   telephone :telephone
+						   },
+						   success:function(data){
+							$('#info').html(data).fadeIn(5000).fadeOut(1000) ;								
+								$('#form_inscription')[0].reset();
+								return true;
+						   }
+								
+					   });
+				   }
+			   });
+		 /* }); */
 </script>
 </body>
 

@@ -14,14 +14,13 @@ include base_app.'/include2/header.php';
 	  <div class="widget">
 	  <div class="widget-content">
 
-<button type="button" id="test" role="button" data-toggle="modal">Test</button>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#temoignage">Ajouter Témoignage</button>
+<button type="button" class="btn btn-primary" id="add">Ajouter Témoignage</button>
 <br>
 </br>
 	
 												
 <!--MODAL-->		
-	<div class="modal hide fade" tabindex="-1" id="temoignage"  role="dialog"  aria-hidden="true">
+	<div class="modal fade" tabindex="-1" id="temoignage"  role="dialog"  aria-hidden="true">
 	<div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -32,16 +31,18 @@ include base_app.'/include2/header.php';
         </button>
       </div>
     <!--FORM AJOUT DECLARATION-->
-      <form action="ajout_temoignage" method="POST">
+      <form  id="formulaire" >
         <div class="modal-body">
-		<input type="hidden" name="id_utilisateur" id="id_utilisateur" >     
+		<input type="hidden" name="id_utilisateur" id="id_utilisateur" value="<?=$id_utilisateur?>" >
+		<input type="text" name="hidden_id" id="hidden_id" >   
+		<input type="hidden" name="action" id="action" value="ajout"/>  		
         <label>Votre Témoignage:</label>
          <div class="form-group">            
-         <textarea name="message" id="message" required class="form-control"></textarea>
+         <textarea name="message" id="message"  class="form-control"></textarea>
          </div>              
         </div>
         <div class="modal-footer">
-			<button type="button" onclick="AjouterTemoignage()" name="enregistrer" class="btn btn-success">Enregistrer</button>
+			<button type="button" id="enregistrer" name="enregistrer" value="ajouter" class="btn btn-success">Enregistrer</button>
             <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>           
         </div>
       </form>
@@ -74,23 +75,23 @@ include base_app.'/include2/header.php';
 
 </div> <!-- /main -->
 <script>
-/*	$(document).ready(function(){
-			
-				alert('coucou');
-			*/
+
 		liste_temoignage();	
-			$('#test').click(function(){
-				$('#temoignage').modal('show');
-			});
+			
+	$('#add').click(function(e){
+		e.preventDefault();
+	$('#temoignage').modal('show');
+	$('#formulaire')[0].reset();
+	$('.modal-title').text("Ajout Témoignage");
+	$('#action').val('ajout');
+	$('#enregistrer').val('Ajouter');
+	});
 	
-		
-			function AjouterTemoignage(){
-				var action = "ajouter"
-				var id_utilisateur = $('#id_utilisateur').val();
-				var message = $('#message').val();
-				if($('#message').val().length == 0){
-					$('#alerte').html('<h4 class="alert alert-danger">le message est obligatoire<h4>').fadeIn().delay(500).fadeOut();
-				}else{
+	$('#formulaire').submit(function(e){
+		e.preventDefault();
+		var action = $('#action').val();
+		var message = $('#message').val();		
+		var id_utilisateur = $('#id_utilisateur').val();								
 					$.ajax({
 					url: "traitement_temoignage.php",
 					type: "POST",
@@ -99,34 +100,43 @@ include base_app.'/include2/header.php';
 						id_utilisateur :id_utilisateur,
 						message :message
 					},
-					success:function(data){
-						$('#message').val("");
-						$('#id_utilisateur').val("");
-						$('#alerte').html('<h4 class="alert alert-success">Ajout avec success</h4>').fadeIn().delay(500).fadeOut();
+					success:function(data)
+					{						
+						//$('#id_utilisateur').val("");
+						$('#alerte').html(data).fadeIn().delay(1000).fadeOut();
+						$('#formulaire')[0].reset;
 						liste_temoignage();
 					}
-				});
-				}
-				
+				});		
+		
+	});
+	/*---------------SUPRESSION------------------*/
+	$(document).on('click','.supprimer',function(e){
+		e.preventDefault();
+		var action = "supprimer";
+		var id = $(this).attr("id");
+		if(confirm("Voulez-vous supprimer ce temoignage")){
+			$.ajax({
+			url: "traitement_temoignage.php",
+			type: "POST",
+			data: {
+				id :id,
+				action :action
+			},
+			success:function(data){
+				liste_temoignage();	
+				alert(data);
 			}
 			
-			function Supprimer(){
-				
-				var action = "supprimer";
-				var id = $('#id_temoignage').val();				
-				$.ajax({
-					url:"traitement_temoignage.php",
-					type: "POST",
-					data:{	
-						id :id,
-						action :action
-						},
-					success:function(data){
-						alert('supprimer avec success');
-					}
-				});
-			}
+		});
+		}else{
+			return false;
+		}		
+	});
+	/*---------------FIN SUPRESSION------------------*/	
+	
 			
+	/*-------------CHARGEMENT LISTE----------------*/
 		function liste_temoignage(){
 					var action = "liste_temoignage";
 					$.ajax({
@@ -141,11 +151,11 @@ include base_app.'/include2/header.php';
 						
 					});
 				}
-			
+	/*-------------FIN CHARGEMENT LISTE---------*/
 	
-		$(document).on('click','.editer',function(){
-			
-			var action = "editer";
+		$(document).on('click','.editer',function(e){
+			e.preventDefault();
+			var action = "liste_un";
 			var id = $(this).attr("id");
 			$.ajax({
 				url: "traitement_temoignage.php",
@@ -156,14 +166,19 @@ include base_app.'/include2/header.php';
 					action :action
 					},
 					success:function(data){
-						//console.log("success");
 						
+						$('.modal-title').text('Edition');
+						$('#enregistrer').text('Modifier');
+						$('#action').val('editer');
 						$('#message').val(data.message);
-						$('#id_utilisateur').val(id);
+						$('#hidden_id').val(id);
 						$('#temoignage').modal('show');
+						$('#alerte').html(data).fadeIn();
+						//$('#alerte').html(data).fadeIn().delay(1000).fadeOut();
+						liste_temoignage();	
 						
 					}
-			})
+			});
 		});
 	
 			

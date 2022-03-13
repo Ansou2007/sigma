@@ -2,6 +2,7 @@
 		require_once base_app.'views/utilisateur/session.php';		
 		$id_utilisateur = $_SESSION['utilisateur']['id'];		
 		$nom_complet = $_SESSION['utilisateur']['nom_complet'];
+		$mail = $_SESSION['utilisateur']['email'];
 		/*
 		$id_departement = $_SESSION['utilisateur']['id_departement'];
 		$id_region = $_SESSION['utilisateur']['id_region'];
@@ -21,14 +22,14 @@
 <title>Gestion Des Mémoires</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<link href="<?php echo base_url?>/include2/css/bootstrap.min.css" rel="stylesheet">
-<link href="<?php echo base_url?>/include2/css/bootstrap-responsive.min.css" rel="stylesheet">
+<link href="<?php echo base_url?>include2/css/bootstrap.min.css" rel="stylesheet">
+<link href="<?php echo base_url?>include2/css/bootstrap-responsive.min.css" rel="stylesheet">
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600"
         rel="stylesheet">
-<link href="<?php echo base_url?>/include2/css/font-awesome.css" rel="stylesheet">
-<link href="<?php echo base_url?>/include2/css/style.css" rel="stylesheet">
-<link href="<?php echo base_url?>/css/pages2/dashboard.css" rel="stylesheet">
-<script src="<?php echo base_url?>/include2/js/jquery-1.7.2.min.js"></script> 
+<link href="<?php echo base_url?>include2/css/font-awesome.css" rel="stylesheet">
+<link href="<?php echo base_url?>include2/css/style.css" rel="stylesheet">
+<link href="<?php echo base_url?>include2/css/pages/dashboard.css" rel="stylesheet">
+<script src="<?php echo base_url?>include2/js/jquery-1.7.2.min.js"></script> 
 
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>

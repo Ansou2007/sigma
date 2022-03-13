@@ -6,21 +6,24 @@
 		extract($_POST);
 			
 			
-		if(isset($_POST['message'])){		
+		if($_POST['action'] == "ajout")
+		{		
 		$id_utilisateur = $_POST['id_utilisateur'];
 		$message = $_POST['message'];
 		$date= date('Y-m-d');
-		$requete = $con->prepare("INSERT INTO temoignage(libelle,date_publication) VALUES(?,?)");
-		$requete->execute(array($message,$date));		
-			}
-			
+		$requete = $con->prepare("INSERT INTO temoignage(id_utilisateur,libelle,date_publication) VALUES(?,?,?)");
+		$requete->execute(array($id_utilisateur,$message,$date));	
+		echo "<h4 class='alert alert-success'>Ajout avec succées</h4>";		
+		}
+		/*-------------------SUPRESSION--------------------*/	
 		if($_POST['action'] == "supprimer"){
 			$id = $_POST['id'];
 			$requete = $con->prepare("DELETE  from temoignage WHERE id=?");
 			$requete->execute(array($id));
-			//header('location:temoignage');
+			echo "Suppression avec success";
 		}
-		
+		/*-------------------FIN SUPRESSION--------------------*/	
+		/*-------------CHARGEMENT LISTE---------*/
 		if($_POST['action'] == "liste_temoignage"){			
 			$requet = $con->prepare("SELECT * FROM temoignage");
 			$requet->execute();
@@ -51,7 +54,7 @@
                     <button type="button" name="editer" id="'.$temoignage["id"].'" class="btn btn-success editer">Modifier</button>					
 					</td>
 					<td>					
-                    <button  name="supprimer" id="'.$temoignage["id"].'" class="btn btn-danger">Supprimer</button>	
+                    <button  name="supprimer" id="'.$temoignage["id"].'" class="btn btn-danger supprimer">Supprimer</button>	
 					</td>
 					</tr>';
 				}
@@ -70,22 +73,30 @@
 			echo $sortie ;
 			
 		}
-		
-		if($_POST['action'] == "editer"){
-			$id = $_POST['id_utilisateur'];						
+		/*-------------FIN CHARGEMENT LISTE---------*/
+		if($_POST['action'] == "liste_un"){
+			$id = $_POST['id'];						
 			$requete = $con->prepare("SELECT * FROM temoignage WHERE id=?");			
 			$requete->execute(array($id));
 			$temoignage = $requete->fetchAll();
 			
 			foreach($temoignage as $temoignage){
 				
-				$sortie['libelle'] = $temoignage['libelle'];
+				$sortie['message'] = $temoignage['libelle'];
 			}
 			echo  json_encode($sortie);
 		}
 		
-		
-		
+		/*---------------EDITION------------------*/
+		if($_POST['action'] == "editer")
+		{
+			
+			$id = $_POST['hidden_id'];
+			$message = $_POST['message'];
+			$requete = $con->prepare("UPDATE temoignage SET libelle=? WHERE id=?");
+			$requete->execute(array($message,$id));
+			echo "<h4 class='alert alert-success'>Modifier avec succées</h4>";
+		}
 	
 		
 	

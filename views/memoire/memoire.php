@@ -39,6 +39,8 @@ include base_app.'/include2/header.php';
       <form id="formulaire"  method="POST" enctype="multipart/form-data">
         <div class="modal-body">
 		<input type="hidden" name="id_utilisateur" id="id_utilisateur" value="<?=$id_utilisateur?>">  
+		<input type="hidden" name="hidden_id" id="hidden_id" > 
+		<input type="hidden" name="mail" id="mail" value="<?=$mail?>">
 		<input type="hidden" name="action" id="action" value="ajout"/>  
          <div class="form-group">
 		 <label>Catégorie:</label>            
@@ -61,8 +63,7 @@ include base_app.'/include2/header.php';
 		<span>Oui</span>						  
 		<input class="form-control auteur_document" value="non" name="auteur_document" type="radio"  />
 		<span>Non</span>								    
-		</div>
-		
+		</div>		
 		 <div class="form-group ">
 			<label>Auteur:</label>
 			<textarea name="auteur" id="auteur" class="form-control"></textarea>
@@ -80,13 +81,9 @@ include base_app.'/include2/header.php';
         <div class="modal-footer">
 			<!--<button type="submit" name="enregistrer" id="enregistrer"  class="btn btn-success">Enregistrer</button>-->
 			<input type="submit" name="enregistrer" id="enregistrer" value="ajout" class="btn btn-success">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
-            
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>           
         </div>
-      </form>
-
-    
-  
+      </form>    
 </div>
 </div>
 <!--FIN MODAL-->	
@@ -130,6 +127,7 @@ $('#add').click(function(){
 				var sujet = $('#sujet').val();
 				var mot_cle = $('#mot_cle').val();
 				var id_utilisateur = $('#id_utilisateur').val();
+				var mail = $('#mail').val();
 				var document = $('#document').val();
 				 
 				$.ajax({
@@ -140,6 +138,7 @@ $('#add').click(function(){
 					processData: false,
 						success:function(data){							
 							$('#alerte').html(data).fadeIn().delay(1000).fadeOut();
+							//$('#alerte').html(data).fadeIn();
 							$('#formulaire')[0].reset();
 							Liste();
 						}
@@ -154,11 +153,12 @@ $('#add').click(function(){
 /*----------CHARGEMENT--------------*/
 function Liste(){
 	var action = "liste_memoire";
-	
+	var id_utilisateur = $('#id_utilisateur').val();
 	$.ajax({
 		url: "traitement_memoire",
 		type: "POST",
-		data: {action :action},
+		data: {id_utilisateur :id_utilisateur,
+				action :action},
 		success:function(data){
 			$('#donnees').html(data);
 		}
@@ -166,14 +166,37 @@ function Liste(){
 }
 /*----------FIN CHARGEMENT--------------*/
 
-	$(document).on('click','.editer',function(e){				
+
+	$(document).on('click','.editer',function(e)
+	{				
 				e.preventDefault();
-				var id_memoire = $(this).attr('id');
+				var id = $(this).attr('id');
+				var action = "liste_un";
 				
-				$('#action').val("editer");
-				$('.modal-title').text('editer');
-				$('#enregistrer').val('Modifier');
-				$('#memoire').modal('show');
+				$.ajax({
+					url: "traitement_memoire",
+					type: "POST",
+					dataType: "json",
+					data:{
+						action :action,
+						id :id
+					},
+					success:function(data){				
+						$('#categorie').val(data.categorie);
+						$('#sujet').val(data.sujet);
+						$('#auteur').val(data.auteur);
+						$('#mot_cle').val(data.mot_cle);
+						$('#hidden_id').val(id);
+						//$('#document').val(data.document);
+						$('.modal-title').text('EDITION');
+						$('#enregistrer').val('Modifier');
+						$('#action').val('editer');
+						$('#memoire').modal('show');
+						Liste();
+						
+					}
+				})
+				
 				
 								
 		});

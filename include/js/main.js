@@ -12,14 +12,14 @@ $(function() {
     
     "use strict";
     
-    //===== Prealoder
+    //===== Chargement
     
     $(window).on('load', function(event) {
         $('.preloader').delay(500).fadeOut(500);
     });
     
     
-    //===== Search
+    //===== Recherche
     
     $('#search').on('click', function(){
         $(".search-box").fadeIn(600);
@@ -207,7 +207,7 @@ $(function() {
     });
     
     
-    //===== Slick testimonial Slied
+    //===== Slide Temoignage
     
     $('.testimonial-slied').slick({
         dots: true,

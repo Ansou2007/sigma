@@ -3,6 +3,7 @@
 require_once('../../core/connection.php');
 
 if(isset($_GET['id']) AND (!empty($_GET['id'])) AND isset($_GET['token']) AND !empty($_GET['token'])){
+	
 	$id = $_GET['id'];
 	$token = $_GET['token'];		
 	$requete = $con->prepare('SELECT * FROM utilisateur WHERE id=? AND token=?');	
@@ -11,9 +12,16 @@ if(isset($_GET['id']) AND (!empty($_GET['id'])) AND isset($_GET['token']) AND !e
 		$resultat = $requete->fetch();
 		if($resultat['etat'] !=1 AND isset($_POST['inscrire'])){
             $id_filiere = $_POST['id_filiere'];
+			$mail = $resultat['email'];
             $mdpass = password_hash($_POST['mdpass1'], PASSWORD_DEFAULT);
 			$requete = $con->prepare('UPDATE utilisateur SET etat= ?,id_filiere=?,mot_pass=?,`role`=? WHERE id= ?');			
 			$requete->execute(array(1,$id_filiere,$mdpass,"etudiant",$id));
+			
+			if(!file_exists("../memoire/Depot/$mail"))
+				{
+					mkdir("../memoire/Depot/$mail",0755);
+					
+				}
 			header('location:login');
 		}else{
 			//header('location:login');
@@ -27,6 +35,7 @@ if(isset($_GET['id']) AND (!empty($_GET['id'])) AND isset($_GET['token']) AND !e
 	
 }else{
 	echo "Aucun Utilisateur";
+		
     exit();
 }
 
