@@ -30,11 +30,23 @@ designation varchar(150)
 ALTER TABLE filiere ADD CONSTRAINT Fk_filiere_pole FOREIGN KEY(id_pole) REFERENCES pole(id)
 ON UPDATE CASCADE;
 
+/*--PROFIL---*/
+drop table if exists profil;
+CREATE TABLE profil(
+id int primary key auto_increment,
+date_naissance date,
+lieu_naissance varchar(150),
+universite varchar(250),
+photo blob,
+sexe varchar(8)
+)ENGINE=InnoDB DEFAULT charset=utf8;
+
 /*--UTLISATEUR DE LA BASE-- */
 drop table if exists utilisateur;
 CREATE TABLE utilisateur(
 id int primary key auto_increment,
 id_filiere int,
+id_profil int,
 token varchar(150),
 nom_complet varchar(150),
 email varchar(100),
@@ -42,19 +54,11 @@ mot_pass varchar(250),
 role varchar(20),
 etat int
 )ENGINE=InnoDB DEFAULT charset=utf8;
-/*ALTER TABLE utilisateur ADD CONSTRAINT Fk_pole_utili FOREIGN KEY(id_pole) REFERENCES pole(id) ON DELETE CASCADE ON UPDATE CASCADE;*/
+ALTER TABLE utilisateur ADD CONSTRAINT Fk_profil_utili FOREIGN KEY(id_profil) REFERENCES profil(id) ON UPDATE CASCADE;
 ALTER TABLE utilisateur ADD CONSTRAINT Fk_filiere_utili FOREIGN KEY(id_filiere) REFERENCES filiere(id) 
 ON UPDATE CASCADE;
 
-/*--PROFIL---*/
-drop table if exists profil;
-CREATE TABLE profil(
-id int primary key auto_increment,
-universite varchar(250),
-photo blob,
-situation_matrimonial varchar(45),
-sexe varchar(8)
-)ENGINE=InnoDB DEFAULT charset=utf8;
+
 
 /*-- TEMOIGNAGE---*/
 drop table if exists temoignage;

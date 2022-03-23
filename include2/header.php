@@ -3,16 +3,18 @@
 		$id_utilisateur = $_SESSION['utilisateur']['id'];		
 		$nom_complet = $_SESSION['utilisateur']['nom_complet'];
 		$mail = $_SESSION['utilisateur']['email'];
+		$role = $_SESSION['utilisateur']['role'];
 		/*
 		$id_departement = $_SESSION['utilisateur']['id_departement'];
 		$id_region = $_SESSION['utilisateur']['id_region'];
 		$login = $_SESSION['utilisateur']['login'];
 		$groupe = $_SESSION['utilisateur']['groupe'];
-		$role = $_SESSION['utilisateur']['role'];
+		
 		$commune = $_SESSION['utilisateur']['nom_commune'];
 		$departement = $_SESSION['utilisateur']['nom_departement'];
 		$region = $_SESSION['utilisateur']['nom_region'];
 */
+		
 ?>
 
 <!DOCTYPE html>
@@ -53,9 +55,9 @@
             </ul>
           </li>
           <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
-                            class="icon-user"></i><?php echo $nom_complet?><b class="caret"></b></a>
+                            class="icon-user"></i> <?php echo strtoupper($nom_complet)?><b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="">Profil</a></li>
+              <li><a href="<?php echo base_url?>profil">Profil</a></li>
               <li><a href="<?php echo base_url?>deconnexion">Déconnexion</a></li>
             </ul>
           </li>
@@ -72,7 +74,7 @@
   <div class="subnavbar-inner">
     <div class="container">
       <ul class="mainnav">
-        <li class="active"><a href="<?php echo base_url?>accueil"><i class="icon-dashboard"></i><span>Accueil</span> </a> </li>
+        <li class=""><a href="<?php echo base_url?>accueil"><i class="icon-dashboard"></i><span>Accueil</span> </a> </li>
         <li class=""><a href="<?php echo base_url?>memoire" > <i class="icon-list-alt"></i><span>Mémoire</span> <b class="caret"></b></a>         
         </li>
 		<li class=""><a href="<?php echo base_url?>temoignage" > <i class="icon-book"></i><span>Témoignage</span> <b class="caret"></b></a></li>       		

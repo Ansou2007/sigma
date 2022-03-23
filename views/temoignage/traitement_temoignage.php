@@ -3,8 +3,9 @@
 	require_once base_app.'core/connection.php';
 	
 	
-		extract($_POST);
-			
+	
+	if(isset($_POST["action"]))
+{		
 			
 		if($_POST['action'] == "ajout")
 		{		
@@ -82,7 +83,7 @@
 			
 			foreach($temoignage as $temoignage){
 				
-				$sortie['message'] = $temoignage['libelle'];
+				$sortie['libelle'] = $temoignage['libelle'];
 			}
 			echo  json_encode($sortie);
 		}
@@ -92,11 +93,12 @@
 		{
 			
 			$id = $_POST['hidden_id'];
-			$message = $_POST['message'];
+			$message = $_POST['libelle'];
 			$requete = $con->prepare("UPDATE temoignage SET libelle=? WHERE id=?");
 			$requete->execute(array($message,$id));
+			$requete->execute();
 			echo "<h4 class='alert alert-success'>Modifier avec succées</h4>";
 		}
 	
 		
-	
+}
