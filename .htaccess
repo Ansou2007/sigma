@@ -22,6 +22,7 @@ RewriteRule ^profil views/utilisateur/profil.php
 RewriteRule ^deconnexion views/utilisateur/deconnexion.php
 RewriteRule ^activation.php views/utilisateur/activation.php?id=$1&token=$2 [QSA]
 RewriteRule ^traitement_inscription.php views/utilisateur/traitement_inscription.php
+RewriteRule ^traitement_profil views/utilisateur/traitement_profil.php
 
 RewriteRule ^activite views/activite/activite.php
 

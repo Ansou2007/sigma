@@ -4,8 +4,6 @@
 	
 	
 	
-	if(isset($_POST["action"]))
-{		
 			
 		if($_POST['action'] == "ajout")
 		{		
@@ -33,6 +31,7 @@
 			$sortie = '
 					<thead>
 					<tr>
+						<th>N°</th>
 						<th>Date</th>
 						<th>Message</th>		
 						<th>Approbation</th> 	
@@ -42,22 +41,24 @@
 				</thead>
 				<tbody>';
 			if($ligne > 0 ){
-				
+				$number = 1;
 				foreach($temoignage as $temoignage){
 					
 					$sortie .= '
 					
 					<tr>
+					<td>'.$number.'</td>
 					<td>'.$temoignage["date_publication"].'</td>
 					<td>'.$temoignage["libelle"].'</td>
 					<td>'.$temoignage["approbation"].'</td>					
 					<td>					                    
-                    <button type="button" name="editer" id="'.$temoignage["id"].'" class="btn btn-success editer">Modifier</button>					
+                    <button  name="editer" id="'.$temoignage["id"].'" class="btn btn-success editer">Modifier</button>					
 					</td>
 					<td>					
                     <button  name="supprimer" id="'.$temoignage["id"].'" class="btn btn-danger supprimer">Supprimer</button>	
 					</td>
 					</tr>';
+					$number ++;
 				}
 				
 			}else{
@@ -83,22 +84,22 @@
 			
 			foreach($temoignage as $temoignage){
 				
+				$sortie['id'] = $temoignage['id'];
 				$sortie['libelle'] = $temoignage['libelle'];
 			}
 			echo  json_encode($sortie);
 		}
 		
+		
 		/*---------------EDITION------------------*/
-		if($_POST['action'] == "editer")
-		{
-			
+		if($_POST['action'] == "edition")
+		{			
 			$id = $_POST['hidden_id'];
 			$message = $_POST['libelle'];
 			$requete = $con->prepare("UPDATE temoignage SET libelle=? WHERE id=?");
 			$requete->execute(array($message,$id));
-			$requete->execute();
+						
 			echo "<h4 class='alert alert-success'>Modifier avec succées</h4>";
 		}
 	
 		
-}

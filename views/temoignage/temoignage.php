@@ -14,7 +14,7 @@ include base_app.'/include2/header.php';
 	  <div class="widget">
 	  <div class="widget-content">
 
-<button type="button" class="btn btn-primary" id="add">Ajouter Témoignage</button>
+<button type="button" class="btn btn-primary" name="add" id="add">Ajouter Témoignage</button>
 <br>
 </br>
 	
@@ -34,7 +34,7 @@ include base_app.'/include2/header.php';
       <form  id="formulaire" method="POST" >
         <div class="modal-body">
 		<input type="hidden" name="id_utilisateur" id="id_utilisateur" value="<?=$id_utilisateur?>" >
-		<input type="text" name="hidden_id" id="hidden_id" >   
+		<input type="text" id="hidden_id" >   
 		<input type="text" name="action" id="action" value="ajout"/>  		
         <label>Votre Témoignage:</label>
          <div class="form-group">            
@@ -42,7 +42,7 @@ include base_app.'/include2/header.php';
          </div>              
         </div>
         <div class="modal-footer">
-			<button type="submit" id="enregistrer" name="enregistrer" value="ajout" class="btn btn-success">Enregistrer</button>
+			<input type="submit" id="enregistrer" name="enregistrer" value="ajout" class="btn btn-success"/>
             <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>           
         </div>
       </form>
@@ -153,33 +153,31 @@ include base_app.'/include2/header.php';
 				}
 	/*-------------FIN CHARGEMENT LISTE---------*/
 	
-		$(document).on('click','.editer',function(e){
-			e.preventDefault();
-			var action = "liste_un";
+		$(document).on('click','.editer',function(){
 			var id = $(this).attr("id");
+			var action = "liste_un";
 			$.ajax({
-				url: "traitement_temoignage",
+				url: "traitement_temoignage.php",
 				type: "POST",
 				dataType: "json",
 				data:{
-					action :action,
-					id :id
-					
+					id :id,
+					action :action
 					},
 					success:function(data){
 												
-						$('#libelle').val(data.libelle);
-						$('#hidden_id').val(id);
+						$('#libelle').val(data.libelle);						
 						$('.modal-title').text('Edition');
-						$('#enregistrer').text('Modifier');
-						$('#action').val('editer');
+						$('#enregistrer').val('Modifier');
+						$('#action').val('edition');
+						$('#hidden_id').val(id);
 						$('#temoignage').modal('show');
 						$('#alerte').html(data);
-						//$('#alerte').html(data).fadeIn().delay(1000).fadeOut();
+						
 						liste_temoignage();	
 						
 					}
-			})
+			});
 		});
 	
 			

@@ -2,7 +2,7 @@
 require_once('../../configuration.php');
 require_once base_app.'/core/connection.php';
 include base_app.'/include2/header.php';
-//header('Content-type: application/pdf');
+
 
 	$requete = $con->prepare("SELECT * FROM memoire");
 	$requete->execute();

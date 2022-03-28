@@ -3,17 +3,13 @@
 		$id_utilisateur = $_SESSION['utilisateur']['id'];		
 		$nom_complet = $_SESSION['utilisateur']['nom_complet'];
 		$mail = $_SESSION['utilisateur']['email'];
-		$role = $_SESSION['utilisateur']['role'];
-		/*
-		$id_departement = $_SESSION['utilisateur']['id_departement'];
-		$id_region = $_SESSION['utilisateur']['id_region'];
-		$login = $_SESSION['utilisateur']['login'];
-		$groupe = $_SESSION['utilisateur']['groupe'];
+		$role = $_SESSION['utilisateur']['role'];		
+		//$date_naissance = $_SESSION['utilisateur']['date_naissance'];
+		//$universite = $_SESSION['utilisateur']['universite'];
+		//$sexe = $_SESSION['utilisateur']['sexe'];
+		//$lieu_naissance = $_SESSION['utilisateur']['lieu_naissance'];
 		
-		$commune = $_SESSION['utilisateur']['nom_commune'];
-		$departement = $_SESSION['utilisateur']['nom_departement'];
-		$region = $_SESSION['utilisateur']['nom_region'];
-*/
+
 		
 ?>
 
