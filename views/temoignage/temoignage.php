@@ -34,11 +34,11 @@ include base_app.'/include2/header.php';
       <form  id="formulaire" method="POST" >
         <div class="modal-body">
 		<input type="hidden" name="id_utilisateur" id="id_utilisateur" value="<?=$id_utilisateur?>" >
-		<input type="text" id="hidden_id" >   
-		<input type="text" name="action" id="action" value="ajout"/>  		
+		<input type="text" id="hidden_id" name="hidden_id" >   
+		<input type="hidden" name="action" id="action" value="ajout"/>  		
         <label>Votre Témoignage:</label>
          <div class="form-group">            
-         <textarea name="libelle" id="libelle"  class="form-control"></textarea>
+         <textarea name="libelle" id="libelle"  class="form-control" required></textarea>
          </div>              
         </div>
         <div class="modal-footer">
@@ -104,7 +104,7 @@ include base_app.'/include2/header.php';
 					{						
 						//$('#id_utilisateur').val("");
 						$('#alerte').html(data).fadeIn().delay(1000).fadeOut();
-						$('#formulaire')[0].reset;
+						$('#formulaire')[0].reset();
 						liste_temoignage();
 					}
 				});		
@@ -139,11 +139,13 @@ include base_app.'/include2/header.php';
 	/*-------------CHARGEMENT LISTE----------------*/
 		function liste_temoignage(){
 					var action = "liste_temoignage";
+					var id_utilisateur = $('#id_utilisateur').val();	
 					$.ajax({
 						url: "traitement_temoignage",
 						type: "POST",
 						data: {
-							action :action
+							action :action,
+							id_utilisateur
 						},
 						success:function(data){
 							$('#donnees').html(data);

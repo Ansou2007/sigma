@@ -2,14 +2,13 @@
 <?php
 	
 	require_once 'core/connection.php';
+	include('controllers/journal.php');
 	session_start();
 	if(isset($_POST['connexion'])){
 		$mail = strip_tags(trim($_POST['mail']));
 		$motdepass = strip_tags($_POST['motdepasse']);
 		$query=$con->prepare('select * from utilisateur where email=?  ');
-		//$query->setFetchMode(PDO::FETCH_ASSOC);
-		$query->bindValue(1,$mail);
-		$query->execute();
+		$query->execute(array($mail));
 		$utilisateur=$query->fetch();
 		if(!password_verify($motdepass,$utilisateur['mot_pass']))
 		$erreur = "Login ou Mot de passe incorrecte";
@@ -18,10 +17,16 @@
 			if($utilisateur['etat']==="0" )
 			{
 				$erreur = "Votre compte n'est pas activé,Contacter l'administrateur";
-			}else{			
+				
+			}else{	
+		
 			header('location:accueil');
 			$_SESSION['utilisateur'] = $utilisateur;
 			$_SESSION['time'] = time();
+			$id = $_SESSION['utilisateur']['id'];
+			notification($id,"access au portail");
+			
+			
 			}
 		}
 		
@@ -91,7 +96,7 @@
 	
 	<div class="content clearfix">
 		
-		<form action="" method="post">
+		<form  method="post">
 		
 			<h1 class="alert alert-success">Authentification</h1>		
 			

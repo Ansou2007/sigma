@@ -16,15 +16,16 @@ if($_POST['action'] == "editer"){
 		$id = $_POST['id_utilisateur'];
 		$photo = file_get_contents($_FILES['photo']['tmp_name']);
 		$taile = $_FILES['photo']['size'];
-		$type = end(explode('.',$_FILES['photo']['name']));
-		$extension_autorise = array('png','jpeg','jpg','gif');
+		//$type = end(explode('.',$_FILES['photo']['name']));
+		//$extension_autorise = array('png','jpeg','jpg','gif');
 		//taille 5MO
+		/*
 		if(in_array($type,$extension_autorise)){
 			echo "<h4 class='alert alert-success'>Format accepté</h4>";
 		}else{
 			echo "<h4 class='alert alert-danger'>Attention</h4>";
-		}
-		/*
+		}*/
+		
 		if($taile > 500000){
 			echo "<h4 class='alert alert-danger'>La taille doit trop grande</h4>";
 		}else{
@@ -32,7 +33,7 @@ if($_POST['action'] == "editer"){
 		$requete->execute(array($photo,$id));
 		echo "<h4 class='alert alert-success'>Modification Profil avec success</h4>";	
 		}
-		*/
+		
 	}
 	
 	?>

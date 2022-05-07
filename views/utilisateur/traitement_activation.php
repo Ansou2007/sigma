@@ -9,10 +9,10 @@ extract($_POST);
 		$requete = $con->prepare("SELECT * FROM utilisateur WHERE email = ?  ");
 		$requete->execute(array($_POST['email']));		 
 	if($requete->rowCount() >0){		
-		echo "success";
+		echo "<h5 class='alert alert-danger'>Mail existe déja</h5>";
 		exit();
 	}else{
-		echo "erreur";
+		echo "success";
 		exit();
 	}
 }	

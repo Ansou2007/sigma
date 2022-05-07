@@ -33,10 +33,10 @@ $profil = $requete->fetchAll();
     <!--FORM AJOUT DECLARATION-->
       <form id="formulaire"  method="POST" enctype="multipart/form-data">
         <div class="modal-body">
-		<input type="text" name="id_utilisateur" id="id_utilisateur" value="<?=$id_utilisateur?>">  
+		<input type="hidden" name="id_utilisateur" id="id_utilisateur" value="<?=$id_utilisateur?>">  
 		<input type="hidden" name="hidden_id" id="hidden_id" > 
 		<input type="hidden" name="mail" id="mail" value="<?=$mail?>">
-		<input type="text" name="action" id="action" value="editer"/>  
+		<input type="hidden" name="action" id="action" value="editer"/>  
 		<div class="form-group">
 			<span>Nom Complet:</span> &nbsp &nbsp &nbsp
 			<input type="text" disabled id="nom_complet" name="nom_complet" class="form-control" value="<?=$nom_complet?>">			
@@ -195,6 +195,7 @@ $profil = $requete->fetchAll();
 					processData: false,
 					success:function(data){
 						$('#alerte1').html(data).fadeIn().delay(1000).fadeOut();
+						//$('#alerte1').html(data).fadeIn();
 						$('#formulaire_photo')[0].reset();
 					}
 				});

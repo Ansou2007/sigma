@@ -3,43 +3,16 @@
 	require_once('core/connection.php');
 	include('fonction.php');
 	// Chargement Témoignage
-	$requete = $con->prepare('SELECT * FROM temoignage');
+	$requete = $con->prepare('SELECT * FROM temoignage,utilisateur WHERE temoignage.id_utilisateur=utilisateur.id');
 	$requete->execute();
 	$temoignage = $requete->fetchAll();
 	
 	//print_r($temoignage);
 	// Chargement Mémoire
-	$requete = $con->prepare('SELECT * FROM memoire');
+	$requete = $con->prepare('SELECT * FROM memoire,utilisateur WHERE memoire.id_utilisateur=utilisateur.id order by date_memoire LIMIT 5 ');
 	$requete->execute();
 	$memoire = $requete->fetchAll();
 	
-	//INSCRIPTION
-		//$token = rand(1000000,9000000);
-       // $token = uniqid(rand(100000,900000)) ;
-	   /*
-		$token = strtoupper(substr(md5(uniqid()),0,4)).date('dy');
-        
-	if($_POST['action'] == "inscription"){
-		if(!empty($_POST['mail'])){
-			$email = $_POST['mail'];
-			$nom_complet = $_POST['nom_complet'];
-			$requete = $con->prepare("INSERT INTO utilisateur(nom_complet,email,token,etat) VALUES(?,?,?,?)");
-			$requete->execute(array($nom_complet,$email,$token,0));
-			
-			$recup = $con->prepare("SELECT * FROM utilisateur WHERE email=?");
-			$recup->execute(array($email));
-			if($recup->rowCount() >0 ){
-				$info_util = $recup->fetch();
-				$_SESSION['id'] = $info_util;
-                $id = $info_util['id'];
-				Envoimail($_POST['mail'],$id,$token);
-				
-				echo "<h4 class='alert alert-success'>Réussie ! Un Mail vous est envoyé pour confirmation</h4>";
-			
-			}	   
-		}
-	}
-	*/
 		//NOMBRE FILIERE
 		$nombre_filiere = nbre_filiere();
 		$nombre_inscrit = nbre_inscrit();
@@ -146,10 +119,6 @@
                                         
                                     </li>
                                     
-                                    <li class="nav-item">
-                                        <a href="">Contact</a>
-                                        
-                                    </li>
                                 </ul>
                             </div>
                         </nav> <!-- nav -->
@@ -268,10 +237,10 @@
                             
                             <div class="course-teacher">
                                 <div class="thum">
-                                    <a href="#"><img src="images/" alt="photo"></a>
+                                    <a href="#"><img src="data:image/jpeg;base64,<?php echo base64_encode($memoire['photo'])?>" alt="photo" height="50" width="50" ></a>
                                 </div>
                                 <div class="name">
-                                    <a href="#"><h6><?=$memoire['auteur']?></h6></a>
+                                    <a href="#"><h6><?=$memoire['nom_complet']?></h6></a>
                                 </div>
                                 
                             </div>
@@ -335,7 +304,7 @@
 							<div id="info" title="Information">
 								
 							</div>
-                            <form   id="form_inscription" onsubmit="return false">
+                            <form   id="form_inscription" onsubmit="return false;">
                                 <div class="singel-form">
 									<input type="hidden" name="action" id="action" value="inscription">
                                     <input type="text" placeholder="Votre Nom Complet" id="nom_complet" name="nom_complet">
@@ -413,7 +382,7 @@
                             <div class="singel-student">
                                 <img src="include/images/quote.png" alt="Quote">
                                 <p><?=$temoignage['libelle']?></p>
-                                <h6><?=$temoignage['id_utilisateur']?></h6>
+                                <h6><?=$temoignage['nom_complet']?></h6>
                                 
                             </div> <!-- singel student -->
                             <?php }?>
@@ -498,7 +467,6 @@
                                 <li><a href="index.php"><i class="fa fa-angle-right"></i>Accueil</a></li>
                                 <li><a href="#"><i class="fa fa-angle-right"></i>A Propos</a></li>
                                 <li><a href="#"><i class="fa fa-angle-right"></i>Mémoire</a></li>
-                                <li><a href=""><i class="fa fa-angle-right"></i>Contact</a></li>
                                 
                             </ul>
                             
@@ -611,57 +579,56 @@
 <script>
    
   
-   
-	/*$(document).ready(function(){
-			   		   			   
-			   $("#mail").keyup(function(){
-				   
+			   $("#mail").keyup(function(e){
+				   e.preventDefault();
 				   var extension = $('#mail').val().split('@').pop().toLowerCase();
-				   
 				if(jQuery.inArray(extension,['uvs.edu.sn','uadb.edu.sn','ucad.edu.sn']) == -1){
-					$('#small_mail').html('<h4 class="alert alert-danger">Adresse mail Invalide</h4>').fadeIn().delay(500).fadeOut();					
+					$('#small_mail').html('<h6 class="alert alert-danger">Adresse mail Invalide</h6>').fadeIn().delay(100).fadeOut();					
                     return false;
-                }else{
-					var action = "verifier";	
+                }
+				Check_mail();
+			   });
+			  function Check_mail(){
+				  var action = "verifier";	
+					var email = $('#mail').val();
 					$.ajax({
 						url: "traitement_activation.php",
 						type: "POST",
 						data:{
 							action :action,
-							email : $('#mail').val()
+							email :email 
 						},
 						success:function(data){
 							if(data == "success"){
-								//$('#small_mail').html(data);
-							$('#small_mail').html('<h6 class="alert alert-danger">Le mail existe déja</h6>').fadeIn().delay(500).fadeOut();
-							return false;
+								$('#small_mail').html('<h6 class="alert alert-success">Adresse mail Valide</h6>').fadeIn().delay(1).fadeOut();
+							//$('#small_mail').html(data).fadeIn(500);
+							return true;
 							}else{
-								//$('#small_mail').html(data);
-								$('#small_mail').html('<h6 class="alert alert-success">Adresse mail Valide</h6>').fadeIn().delay(500).fadeOut();
-								return true;
+								$('#small_mail').html(data).fadeIn().delay(1).fadeOut();
 							}
 							
 						}
 						
 					});
-					//$('#small_mail').html('<h6 class="alert alert-success">Adresse mail Valide</h6>').fadeIn().delay(500).fadeOut();
 				}
-			   });
-			   
-			  
 
-			*/  
+			  
 			   $('#form_inscription').submit(function(e){
 				   e.preventDefault();
+				   var extension = $('#mail').val().split('@').pop().toLowerCase();
 				   var action = $('#action').val();
 				   var nom_complet = $('#nom_complet').val();
 				   var mail = $('#mail').val();
 				   var telephone = $('#telephone').val();
 				   
 				   if(nom_complet == '' || mail == '' || telephone == ''){
-					   $('#info').html("<h4 class='alert alert-danger'>Tous les champs doivent etre remplies</h4>").fadeIn(500).fadeOut(1000) ;
-					  
-				   }else{
+					   $('#info').html("<h4 class='alert alert-danger'>Tous les champs doivent etre remplies</h4>").fadeIn().delay(500).fadeOut() ;
+					  return false;
+				   }else if(jQuery.inArray(extension,['uvs.edu.sn','uadb.edu.sn','ucad.edu.sn']) == -1){
+					$('#info').html('<h6 class="alert alert-danger">Adresse mail Invalide</h6>').fadeIn().delay(100).fadeOut();					
+					return false;
+				   }
+				   else{
 					   $.ajax({
 						   url: "traitement_inscription.php",
 						   type: "POST",
@@ -672,15 +639,15 @@
 							   telephone :telephone
 						   },
 						   success:function(data){
-							$('#info').html(data).fadeIn(5000).fadeOut(1000) ;								
+							$('#info').html(data).fadeIn().delay(500).fadeOut() ;								
 								$('#form_inscription')[0].reset();
 								return true;
 						   }
 								
 					   });
-				   }
+				   } 
 			   });
-		 /* }); */
+		 
 </script>
 </body>
 

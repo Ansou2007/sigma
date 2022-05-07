@@ -1,6 +1,9 @@
 <?php
 	require_once '../../configuration.php';
 	require_once base_app.'core/connection.php';
+	require_once base_app.'views/utilisateur/session.php';		
+
+	include base_app.'controllers/journal.php';
 	
 	
 	
@@ -8,24 +11,30 @@
 		if($_POST['action'] == "ajout")
 		{		
 		$id_utilisateur = $_POST['id_utilisateur'];
-		$message = $_POST['message'];
+		$message = $_POST['libelle'];
 		$date= date('Y-m-d');
 		$requete = $con->prepare("INSERT INTO temoignage(id_utilisateur,libelle,date_publication) VALUES(?,?,?)");
-		$requete->execute(array($id_utilisateur,$message,$date));	
+		$requete->execute(array($id_utilisateur,$message,$date));
+		$libelle = "Temoignage Ajouté";
+		notification($id_utilisateur,$libelle);
 		echo "<h4 class='alert alert-success'>Ajout avec succées</h4>";		
 		}
 		/*-------------------SUPRESSION--------------------*/	
 		if($_POST['action'] == "supprimer"){
 			$id = $_POST['id'];
+			$id_journal = $_SESSION['utilisateur']['id'];
 			$requete = $con->prepare("DELETE  from temoignage WHERE id=?");
 			$requete->execute(array($id));
+			$libelle = "Temoignage Supprimé";
+			notification($id_journal,$libelle);
 			echo "Suppression avec success";
 		}
 		/*-------------------FIN SUPRESSION--------------------*/	
 		/*-------------CHARGEMENT LISTE---------*/
-		if($_POST['action'] == "liste_temoignage"){			
-			$requet = $con->prepare("SELECT * FROM temoignage");
-			$requet->execute();
+		if($_POST['action'] == "liste_temoignage"){	
+			$id_utilisateur = $_POST['id_utilisateur'];
+			$requet = $con->prepare("SELECT * FROM temoignage WHERE id_utilisateur=? ");
+			$requet->execute(array($id_utilisateur));
 			$temoignage = $requet->fetchAll();
 			$ligne = $requet->rowCount();
 			$sortie = '
@@ -77,7 +86,8 @@
 		}
 		/*-------------FIN CHARGEMENT LISTE---------*/
 		if($_POST['action'] == "liste_un"){
-			$id = $_POST['id'];						
+			$id = $_POST['id'];	
+			//$id_utilisateur = $_POST['id_utilisateur'];
 			$requete = $con->prepare("SELECT * FROM temoignage WHERE id=?");			
 			$requete->execute(array($id));
 			$temoignage = $requete->fetchAll();
@@ -94,10 +104,14 @@
 		/*---------------EDITION------------------*/
 		if($_POST['action'] == "edition")
 		{			
-			$id = $_POST['hidden_id'];
+			//$id = $_POST['hidden_id'];
+			$id = $_POST['id'];
+			//$id_utilisateur = $_POST['id_utilisateur'];
 			$message = $_POST['libelle'];
 			$requete = $con->prepare("UPDATE temoignage SET libelle=? WHERE id=?");
 			$requete->execute(array($message,$id));
+			//$libelle = "Temoignage Modifié";
+			//notification($id_utilisateur,$libelle);
 						
 			echo "<h4 class='alert alert-success'>Modifier avec succées</h4>";
 		}

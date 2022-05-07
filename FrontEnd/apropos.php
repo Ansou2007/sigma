@@ -1,12 +1,13 @@
 <?php
 	require_once('../core/connection.php');
 	
-	$requete = $con->prepare('SELECT * FROM temoignage');
+	// Chargement Témoignage
+	$requete = $con->prepare('SELECT * FROM temoignage,utilisateur WHERE temoignage.id_utilisateur=utilisateur.id');
 	$requete->execute();
 	$temoignage = $requete->fetchAll();
 	
 	//print_r($temoignage);
-
+	
 ?>
 
 <!doctype html>
@@ -109,10 +110,6 @@
                                         
                                     </li>
                                     
-                                    <li class="nav-item">
-                                        <a href="">Contact</a>
-                                        
-                                    </li>
                                 </ul>
                             </div>
                         </nav> <!-- nav -->
@@ -231,19 +228,22 @@
                             <h3>S'inscrire</h3>                         
                         </div>
                         <div class="main-form">
-                            <form action="#">
+                            <form   id="form_inscription" onsubmit="return false;">
                                 <div class="singel-form">
-                                    <input type="text" placeholder="Votre Nom Complet">
+									<input type="hidden" name="action" id="action" value="inscription">
+                                    <input type="text" placeholder="Votre Nom Complet" id="nom_complet" name="nom_complet">
                                 </div>
                                 <div class="singel-form">
-                                    <input type="email" placeholder="Votre  Mail institutionnel">
+                                    <input type="email" id="mail" name="mail" autocomplete="off" placeholder="Votre  Mail institutionnel" name="mail">
+									<small id="small_mail"></small>
+								</div>
+                                <div class="singel-form">
+                                    <input type="text" placeholder="téléphone" name="telephone" id="telephone">
                                 </div>
                                 <div class="singel-form">
-                                    <input type="text" placeholder="téléphone">
+                                    <button class="main-btn" type="submit" id="inscrire" name="inscrire">Valider</button>
                                 </div>
-                                <div class="singel-form">
-                                    <button class="main-btn" type="button">Valider</button>
-                                </div>
+								
                             </form>
                         </div>
                     </div> <!-- category form -->
@@ -281,7 +281,7 @@
 						
                         <div class="testimonial-cont">
                             <p><?=$temoignage['libelle']?></p>
-                            <h6><?=$temoignage['id']?></h6>                           
+                            <h6><?=$temoignage['nom_complet']?></h6>                           
                         </div>
 						
                     </div> <!-- singel testimonial -->
@@ -362,7 +362,7 @@
                                 <li><a href="index.php"><i class="fa fa-angle-right"></i>Accueil</a></li>
                                 <li><a href="#"><i class="fa fa-angle-right"></i>A Propos</a></li>
                                 <li><a href="#"><i class="fa fa-angle-right"></i>Mémoire</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i>Contact</a></li>
+                                
                                 
                             </ul>
                             
@@ -479,6 +479,79 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDC3Ip9iVC0nIxC6V14CKLQ1HZNF_65qEQ"></script>
     <script src="include/js/map-script.js"></script>
 
+<script>
+   
+  
+			   $("#mail").keyup(function(e){
+				   e.preventDefault();
+				   var extension = $('#mail').val().split('@').pop().toLowerCase();
+				if(jQuery.inArray(extension,['uvs.edu.sn','uadb.edu.sn','ucad.edu.sn']) == -1){
+					$('#small_mail').html('<h6 class="alert alert-danger">Adresse mail Invalide</h6>').fadeIn().delay(100).fadeOut();					
+                    return false;
+                }
+				Check_mail();
+			   });
+			  function Check_mail(){
+				  var action = "verifier";	
+					var email = $('#mail').val();
+					$.ajax({
+						url: "traitement_activation.php",
+						type: "POST",
+						data:{
+							action :action,
+							email :email 
+						},
+						success:function(data){
+							if(data == "success"){
+								$('#small_mail').html('<h6 class="alert alert-success">Adresse mail Valide</h6>').fadeIn().delay(1).fadeOut();
+							//$('#small_mail').html(data).fadeIn(500);
+							return true;
+							}else{
+								$('#small_mail').html(data).fadeIn().delay(1).fadeOut();
+							}
+							
+						}
+						
+					});
+				}
+
+			  
+			   $('#form_inscription').submit(function(e){
+				   e.preventDefault();
+				   var extension = $('#mail').val().split('@').pop().toLowerCase();
+				   var action = $('#action').val();
+				   var nom_complet = $('#nom_complet').val();
+				   var mail = $('#mail').val();
+				   var telephone = $('#telephone').val();
+				   
+				   if(nom_complet == '' || mail == '' || telephone == ''){
+					   $('#info').html("<h4 class='alert alert-danger'>Tous les champs doivent etre remplies</h4>").fadeIn().delay(500).fadeOut() ;
+					  return false;
+				   }else if(jQuery.inArray(extension,['uvs.edu.sn','uadb.edu.sn','ucad.edu.sn']) == -1){
+					$('#info').html('<h6 class="alert alert-danger">Adresse mail Invalide</h6>').fadeIn().delay(100).fadeOut();					
+					return false;
+				   }
+				   else{
+					   $.ajax({
+						   url: "traitement_inscription.php",
+						   type: "POST",
+						   data: {
+							   action :action,
+							   nom_complet :nom_complet,
+							   mail :mail,
+							   telephone :telephone
+						   },
+						   success:function(data){
+							$('#info').html(data).fadeIn().delay(500).fadeOut() ;								
+								$('#form_inscription')[0].reset();
+								return true;
+						   }
+								
+					   });
+				   } 
+			   });
+		 
+</script>
 </body>
 
 </html>
