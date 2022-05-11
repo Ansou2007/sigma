@@ -111,19 +111,23 @@
                                         <a class="active" href="memo">Mémoire</a>
                                         
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="" href="login"><i class="fa fa-user-circle"></i> Connexion</a>
+                                        
+                                    </li>
                                    
                                 </ul>
                             </div>
                         </nav> <!-- nav -->
                     </div>
-                    <div class="col-lg-1 col-md-2 col-sm-3 col-3">
+                   <!--  <div class="col-lg-1 col-md-2 col-sm-3 col-3">
                         <div class="right-icon text-right">
                             <ul>
                                 
-                                <li><a href="#"><i class="fa fa-user"></i></a></li>
+                                <li><a class="" href="login"><i class="fa fa-user">Connexion</i></a></li>
                             </ul>
-                        </div> <!-- right icon -->
-                    </div>
+                        </div> right icon 
+                    </div> -->
                 </div> <!-- row -->
             </div> <!-- container -->
         </div>
@@ -165,7 +169,7 @@
                     <div class="courses-top-search">                       
                         <div class="courses-search float-left">
                             <form action="#">
-                                <input type="text" placeholder="rechercher">
+                                <input type="text" id="rechercher" placeholder="rechercher">
                                 <button type="button"><i class="fa fa-search"></i></button>
                             </form>
                         </div> 
@@ -175,45 +179,18 @@
             </div> <!-- row -->
 			<!-- FIN BOUTON RECHERCHE--->
 			<!--TABLEAU CONTENU-->
-            <div class="tab-content" id="myTabContent">
-              <div class="tab-pane fade show active" id="courses-grid" role="tabpanel" aria-labelledby="courses-grid-tab">
-                    <div class="row">
-						<?php foreach($memoire as $memoire){ ?>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="singel-course mt-30">
-                                <div class="thum">
-                                    <div class="image">
-                                         <img src="include/images/memoire/pdf.png" alt="Course" height="150" width="50">
-                                    </div>                                  
-                                </div>
-                                <div class="cont">                                    
-                                    <a href=""><h4><?=$memoire['sujet']?></h4></a>
-                                    <div class="course-teacher">
-                                        <div class="thum">
-										<a href="#"><img src="data:image/jpeg;base64,<?php echo base64_encode($memoire['photo'])?>" alt="photo" height="50" width="50" ></a>
-
-                                        </div>
-                                        <div class="name">
-                                            <a href="#"><h6>Ansoumane Michel</h6></a>
-                                        </div>
-                                        <div class="form-group">
-                                            <span>Catégorie<h6 class="text text-center"><?=$memoire['categorie']?></h6></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> <!-- singel course -->
-                        </div>
-						<?php }?>                       	
-                    </div> <!-- row -->
-                </div>               
+            <div class="tab-content" id="memoire">
+              
+            </div>               
             </div> 
 			<!-- FIN TABLEAU CONTENU -->
+            <!--PAGINATION-->
             <div class="row">
                 <div class="col-lg-12">
                     <nav class="courses-pagination mt-50">
                         <ul class="pagination justify-content-center">
                             <li class="page-item">
-                                <a href="#" aria-label="Previous">
+                                <a href="#" aria-label="Précedent">
                                     <i class="fa fa-angle-left"></i>
                                 </a>
                             </li>
@@ -221,18 +198,19 @@
                             <li class="page-item"><a href="#">2</a></li>
                             
                             <li class="page-item">
-                                <a href="#" aria-label="Next">
+                                <a href="#" aria-label="Suivant">
                                     <i class="fa fa-angle-right"></i>
                                 </a>
                             </li>
                         </ul>
-                    </nav>  <!-- courses pagination -->
+                    </nav>  <!--  pagination -->
                 </div>
             </div>  <!-- row -->
+            <!--FIN PAGINATION-->
         </div> <!-- container -->
     </section>
     
-    <!--====== COURSES PART ENDS ======-->
+    <!--====== MEMOIRE LISTE FIN ======-->
     
    
     
@@ -284,7 +262,7 @@
     
     
    
-    <!--====== PATNAR LOGO PART START ======-->
+    <!--====== PARTNAIRE LOGO DEBUT ======-->
     
     <div id="patnar-logo" class="pt-40 pb-80 gray-bg">
         <div class="container">
@@ -319,7 +297,7 @@
         </div> <!-- container -->
     </div> 
     
-    <!--====== PATNAR LOGO PART ENDS ======-->
+    <!--====== PARTNAIRE LOGO FIN ======-->
    
     <!--====== FOOTER PART START ======-->
     
@@ -468,8 +446,46 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDC3Ip9iVC0nIxC6V14CKLQ1HZNF_65qEQ"></script>
     <script src="include/js/map-script.js"></script>
 <script>
-   
-  
+   /*----------CHARGEMENT--------------*/
+$(document).ready(function(){
+Liste_memoire();
+
+    $("#rechercher").keyup(function(e){
+        e.preventDefault();
+        var txt = $(this).val();
+            var action = "recherche";
+            if(txt != ''){          
+            $.ajax({
+                    url : "traitement_memo",
+                    type : "POST",
+                    data : {
+                        action :action,
+                        sujet :txt,
+                        categorie :txt
+                    },
+                    success:function(data){
+                        $('#memoire').html(data);
+                    }
+                 });
+                }else{
+                    Liste_memoire();
+                }
+    })
+});
+function Liste_memoire(){
+	var action = "liste_memoire";
+	$.ajax({
+		url: "traitement_memo",
+		type: "POST",
+		data: {action :action},
+		success:function(data){
+			$('#memoire').html(data);
+		}
+	});
+}
+/*----------FIN CHARGEMENT--------------*/
+
+  //INSCRIPTION
 			   $("#mail").keyup(function(e){
 				   e.preventDefault();
 				   var extension = $('#mail').val().split('@').pop().toLowerCase();
@@ -538,7 +554,7 @@
 					   });
 				   } 
 			   });
-		 
+		 //FIN INSCRIPTION
 </script>
 </body>
 

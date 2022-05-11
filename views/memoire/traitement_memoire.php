@@ -1,10 +1,11 @@
 <?php
 	require_once '../../configuration.php';
 	require_once base_app.'core/connection.php';
+	include base_app.'controllers/journal.php';
 
 	
 	//extract($_POST);
-	
+	/*AJOUTER MEMOIRE*/
 if($_POST['action'] == "ajout"){ 
 	$code = "DPT-".strtoupper(substr(md5(uniqid()),0,4)).date('dy');
 	if(!empty($_FILES)){	
@@ -29,6 +30,8 @@ if($_POST['action'] == "ajout"){
 			$requete->execute(array($id_utilisateur,$code,$categorie,$date,$sujet,$document_destination,$auteur,$mots_cles));	
 			
 			echo "<h4 class='alert alert-success'>Ajout avec success</h4>";
+			$libelle = "Mémoire ajouté";
+			notification($id_utilisateur,$libelle);
 		}else{
 			
 			echo "<h4 class='alert alert-danger'>Une erreur s'est produit</h4>";
@@ -67,13 +70,20 @@ if($_POST['action'] == "ajout"){
 				</thead>
 				<tbody>';
 		if($ligne >0){
+			$number = 1;
 				foreach($memoire as $memoire){				
 					$sortie .= '<tr>
+					<td>'.$number.'</td>
 					<td>'.$memoire["categorie"].'</td>
 					<td>'.$memoire["numero_depot"].'</td>
 					<td>'.$memoire["date_memoire"].'</td>
 					<td>'.$memoire["sujet"].'</td>	
-					<td><a href="lecture.php?code='.$memoire["numero_depot"].'" target="_blank"><i class="icon-eye-open"></i>Voir</a></td>	
+					<td>
+					<form action="display.php" method="POST">
+					<input  type="hidden" name="numero_depot" value="'.$memoire["numero_depot"].'">
+					<Button type="submit" name="voir"><i class="icon-eye-open"></i>Voir</Button>
+					</form>
+					</td>	
 					<td>'.$memoire["auteur"].'</td>	
 					<td>'.$memoire["mots_cles"].'</td>	
 					<td>					                    
@@ -83,7 +93,7 @@ if($_POST['action'] == "ajout"){
                     <button type="button"  name="supprimer" id="'.$memoire["id"].'" class="btn btn-danger supprimer">Supprimer</button>	
 					</td>
 					</tr>';
-		
+			$number++;
 			}
 			
 			}else{
@@ -93,12 +103,12 @@ if($_POST['action'] == "ajout"){
 				</tr>';			
 				}
 	$sortie .= '</tbody>';
+	
 	echo $sortie;
 }
 
-
-if($_POST['action'] == "liste_un")
-{
+/*CHOIX UN*/
+if($_POST['action'] == "liste_un"){
 	$id = $_POST['id'];
 	$requete = $con->prepare("SELECT * FROM memoire WHERE id=?");
 	$requete->execute(array($id));
@@ -114,7 +124,7 @@ if($_POST['action'] == "liste_un")
 	}
 	echo utf8_encode(json_encode($sortie));
 }
-/*--------------EDITION-------------*/
+/*--------------MODIFIER-------------*/
 if($_POST['action'] == "editer"){
 	$id = $_POST['hidden_id'];
 	$categorie = $_POST['categorie'];

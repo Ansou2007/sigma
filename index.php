@@ -118,18 +118,16 @@
                                         <a href="memo">Mémoire</a>
                                         
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="" href="login"><i class="fa fa-user-circle"></i> Connexion</a>
+                                        
+                                    </li>
                                     
                                 </ul>
                             </div>
                         </nav> <!-- nav -->
                     </div>
-                    <div class="col-lg-1 col-md-2 col-sm-3 col-3">
-                        <div class="right-icon text-right">
-                            <ul>                                
-                                <li><a href="login.php" ><i class="fa fa-user btn btn-success"></i></a></li>
-                            </ul>
-                        </div> <!-- right icon -->
-                    </div>
+                   
                 </div> <!-- row -->
             </div> <!-- container -->
         </div>

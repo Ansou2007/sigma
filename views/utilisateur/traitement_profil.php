@@ -1,6 +1,7 @@
 <?php
 	require_once '../../configuration.php';
 	require_once base_app.'core/connection.php';
+	
 if($_POST['action'] == "editer"){
 		$id = $_POST['id_utilisateur'];
 		$date_naissance = $_POST['date_naissance'];

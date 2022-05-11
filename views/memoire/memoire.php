@@ -4,6 +4,7 @@ require_once base_app.'/core/connection.php';
 include base_app.'/include2/header.php';
 
 
+
 	$requete = $con->prepare("SELECT * FROM memoire");
 	$requete->execute();
 	$memoire = $requete->fetchAll();
@@ -79,7 +80,6 @@ include base_app.'/include2/header.php';
 		 </div>
         </div>
         <div class="modal-footer">
-			<!--<button type="submit" name="enregistrer" id="enregistrer"  class="btn btn-success">Enregistrer</button>-->
 			<input type="submit" name="enregistrer" id="enregistrer" value="ajout" class="btn btn-success">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>           
         </div>
@@ -121,7 +121,7 @@ $('#add').click(function(){
 	$('#action').val('ajout');
 	$('#enregistrer').val('Ajout');
 });
-	$('#formulaire').submit(function(event){
+$('#formulaire').submit(function(event){
 		event.preventDefault();				
 				var categorie = $('#categorie').val();
 				var sujet = $('#sujet').val();
@@ -131,7 +131,7 @@ $('#add').click(function(){
 				var document = $('#document').val();
 				 
 				$.ajax({
-					url: "traitement_memoire.php",
+					url: "traitement_m.php",
 					type:"POST",
 					data:new FormData(this),
 					contentType: false,
@@ -155,9 +155,10 @@ function Liste(){
 	var action = "liste_memoire";
 	var id_utilisateur = $('#id_utilisateur').val();
 	$.ajax({
-		url: "traitement_memoire",
+		url: "traitement_m",
 		type: "POST",
-		data: {id_utilisateur :id_utilisateur,
+		data: {
+			id_utilisateur :id_utilisateur,
 				action :action},
 		success:function(data){
 			$('#donnees').html(data);
@@ -174,7 +175,7 @@ function Liste(){
 				var action = "liste_un";
 				
 				$.ajax({
-					url: "traitement_memoire",
+					url: "traitement_m",
 					type: "POST",
 					dataType: "json",
 					data:{
@@ -207,7 +208,7 @@ function Liste(){
 				var id_memoire = $(this).attr('id');				
 				if(confirm("Voulez-vous supprimer le mémoire ?")){				
 					$.ajax({
-						url: "traitement_memoire.php",
+						url: "traitement_m.php",
 						type: "POST",
 						data :{
 							id_memoire :id_memoire,

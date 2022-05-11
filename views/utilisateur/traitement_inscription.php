@@ -68,7 +68,8 @@ if(isset($_POST['action']) == "verifier"){
 		$mail->Username = 'coursecoma@gmail.com';
 		$mail->Password = 'Promotion9@';
 		$mail->Subject = 'Activation Compte';
-		$mail->setFrom = 'coursecoma@gmail.com';		
+		$mail->setFrom = 'coursecoma@gmail.com';	
+		$mail->FromName = 'SIGMA';		
 		$mail->addAddress($email,'');	
 		$mail->isHTML(true);
 		$mail->Body = 'Bonjour Veuillez Cliquer ici pour <a href='.base_url.'activation.php?id='.$id.'&token='.$token.'>Activer Votre Compte</a>';

@@ -7,16 +7,19 @@ RewriteRule ^accueil$ views/accueil.php
 RewriteRule ^contact$ FrontEnd/contact.php
 RewriteRule ^apropos$ FrontEnd/apropos.php
 RewriteRule ^memo$ FrontEnd/memo.php
-
+RewriteRule ^traitement_memo controllers/traitement_memo.php
+#### TEMOIGNAGE #####
 RewriteRule ^temoignage views/temoignage/temoignage.php
 RewriteRule ^traitement_temoignage views/temoignage/traitement_temoignage.php
-
+#### MESSAGE ############
 RewriteRule ^message views/message/message.php
 
 RewriteRule ^memoire views/memoire/memoire.php
-RewriteRule ^traitement_memoire views/memoire/traitement_memoire.php
-RewriteRule ^lecture.php views/memoire/lecture.php?code=$1 [QSA]
+RewriteRule ^traitement_m views/memoire/traitement_memoire.php
 
+RewriteRule ^lecture.php views/memoire/lecture.php?code=$1 [QSA]
+RewriteRule ^display.php views/memoire/display.php
+#### UTILISATEUR ############
 RewriteRule ^utilisateur views/utilisateur/utilisateur.php
 RewriteRule ^profil views/utilisateur/profil.php
 RewriteRule ^deconnexion views/utilisateur/deconnexion.php
@@ -26,4 +29,14 @@ RewriteRule ^traitement_profil views/utilisateur/traitement_profil.php
 RewriteRule ^traitement_activation views/utilisateur/traitement_activation.php
 
 RewriteRule ^activite views/activite/activite.php
+#### ADMIN ############
+RewriteRule ^admin views/admin/admin.php
+RewriteRule ^liste_memoire views/admin/liste_memoire.php
+RewriteRule ^liste_temoignage views/admin/liste_temoignage.php
+RewriteRule ^liste_message views/admin/liste_message.php
+RewriteRule ^liste_activite views/admin/liste_activite.php
+RewriteRule ^categorie views/admin/categorie.php
+RewriteRule ^filiere views/admin/filiere.php
+RewriteRule ^liste_utilisateur views/admin/liste_utilisateur.php
+RewriteRule ^admin_profil views/admin/profil_admin.php
 

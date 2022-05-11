@@ -10,7 +10,7 @@ if(isset($_GET['code'])){
 	if($requete->rowCount() >0 ){
 		$resultat = $requete->fetch();
 		$fichier = $resultat['lien_memoire'];
-		//$mail = $resultat['email'];
+	
 		
 		echo $rendu = '			
 			<!doctype html>
@@ -22,7 +22,7 @@ if(isset($_GET['code'])){
 			<body >
 			<div class="container" oncontextmenu="return false" onselectstart="return false" onMouseOver="window.status="desole";return false;">
 				
-				<embed oncontextmenu="return false"  src="'.base_url.'views/memoire/'.$fichier.'#toolbar=0" type="application/pdf" width="100%" height="600px" />
+				<embed  src="'.base_url.'views/memoire/'.$fichier.'#toolbar=0" type="application/pdf" width="100%" height="600px" />
 			
 				
 			
