@@ -110,7 +110,7 @@
                                         
                                     </li>
                                     <li class="nav-item">
-                                        <a class="" href="login"><i class="fa fa-user-circle"></i> Connexion</a>
+                                        <a id="btn_connexion" href="login"><i class="fa fa-user-circle"></i> Connexion</a>
                                         
                                     </li>
                                     
@@ -477,7 +477,24 @@
     <script src="include/js/map-script.js"></script>
 
 <script>
-   
+      tester_session();
+  
+  function tester_session(){
+      $.ajax({
+          url: './controllers/control_session.php',
+          type: 'POST',
+          success:function(data){
+              if(data == 'non connecté'){
+                  $('#Modal_login').modal('show');
+                  
+              }else{
+                  $('#btn_connexion').val("Vous etes Connecté !") ;
+                  $('#btn_connexion').text("Vous etes Connecté !") ;
+              }
+          }
+      })
+      
+  }
   
 			   $("#mail").keyup(function(e){
 				   e.preventDefault();

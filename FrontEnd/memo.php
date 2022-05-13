@@ -63,7 +63,30 @@
 </head>
 
 <body>
-   
+    <!--MODAL-->		
+	<div class="modal fade" tabindex="-1" id="Modal_login"  role="dialog"  aria-hidden="true">
+	<div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+	  <div id="alerte"></div>
+        <h5 class="modal-title">Alerte</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <div class="modal-body">
+		<h4>Vous n'etes pas Connecté(e)</h4>
+		<p>Veuillez vous inscrire si vous n'avez pas encore de compte</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>           
+        </div>
+      
+
+    </div>
+  </div>
+</div>
+<!--FIN MODAL-->
    <!--====== PRELOADER PART START ======-->
     
     <div class="preloader">
@@ -112,7 +135,7 @@
                                         
                                     </li>
                                     <li class="nav-item">
-                                        <a class="" href="login"><i class="fa fa-user-circle"></i> Connexion</a>
+                                        <a id="btn_connexion" href="login"><i class="fa fa-user-circle"></i> Connexion</a>
                                         
                                     </li>
                                    
@@ -449,7 +472,7 @@
    /*----------CHARGEMENT--------------*/
 $(document).ready(function(){
 Liste_memoire();
-
+tester_session();
     $("#rechercher").keyup(function(e){
         e.preventDefault();
         var txt = $(this).val();
@@ -472,6 +495,24 @@ Liste_memoire();
                 }
     })
 });
+
+  
+  function tester_session(){
+      $.ajax({
+          url: './controllers/control_session.php',
+          type: 'POST',
+          success:function(data){
+              if(data == 'non connecté'){
+                  $('#Modal_login').modal('show');
+                  
+              }else{
+                  $('#btn_connexion').val("Vous etes Connecté !") ;
+                  $('#btn_connexion').text("Vous etes Connecté !") ;
+              }
+          }
+      })
+      
+  }
 function Liste_memoire(){
 	var action = "liste_memoire";
 	$.ajax({

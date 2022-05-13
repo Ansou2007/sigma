@@ -1,13 +1,20 @@
 
 <?php
-	
+	session_start();
 	require_once 'core/connection.php';
 	include('controllers/journal.php');
-	session_start();
+	/*
+	if(empty($_SESSION['time']) && empty($_SESSION['utilisateur'])){
+		session_destroy();
+		header('location:login.php');
+	}else{
+		header('location:accueil');
+	}
+*/
 	if(isset($_POST['connexion'])){
 		$mail = strip_tags(trim($_POST['mail']));
 		$motdepass = strip_tags($_POST['motdepasse']);
-		$query=$con->prepare('select * from utilisateur where email=?  ');
+		$query=$con->prepare('SELECT * FROM utilisateur WHERE email=?  ');
 		$query->execute(array($mail));
 		$utilisateur=$query->fetch();
 		if(!password_verify($motdepass,$utilisateur['mot_pass']))
@@ -23,6 +30,7 @@
 			header('location:accueil');
 			$_SESSION['utilisateur'] = $utilisateur;
 			$_SESSION['time'] = time();
+			//$_SESSION['connexion'] = true;
 			$id = $_SESSION['utilisateur']['id'];
 			notification($id,"access au portail");
 			
@@ -122,20 +130,15 @@
 					<input id="Field" name="Field" type="checkbox" class="field login-checkbox" value="First Choice" tabindex="4" />
 					<label class="choice" for="Field">Se rappeler de moi</label>
 				</span>
-									
-				<button type="submit" name="connexion" class="button btn btn-success btn-large">Connexion</button>
-				
+								
+				<button type="submit" name="connexion" class="button btn btn-success btn-large">Connexion</button>				
 			</div> <!-- .actions -->
-			
-			
 			
 		</form>
 		
 	</div> <!-- /content -->
 	
 </div> <!-- /account-container -->
-
-
 
 <div class="login-extra">
 	<a href="#">Mot de Passe oublié ?</a>
@@ -146,7 +149,38 @@
 <script src="include/login/js/bootstrap.js"></script>
 
 <script src="include/login/js/signin.js"></script>
+<script>
+$(document).ready(function(){
+	//e.preventDefault();
+	//alert('coucou');
+	tester_session();
+});
+   
+  
+  function tester_session(){
+	  $.ajax({
+		  url: './controllers/redirect_session.php',
+		  type: 'POST',
+		  success:function(data){
+			  if(data == 'non connecté'){
+				 // window.location.href="login";
+				  //alert('veuillez vous connecté');
+				  exit();
+			  }else{
+				window.location.href="accueil";
+				//alert(' connecté');
 
+			  }
+		  }
+	  });
+	  
+  }
+/*
+  setInterval(function() {
+	tester_session();
+  }, 10000); //10000= 10 secondes
+  */
+</script>
 </body>
 
 </html>

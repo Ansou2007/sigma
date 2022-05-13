@@ -1,6 +1,8 @@
 <?php
-	session_start();
+	//session_start();
+	//require_once('controllers/control_session.php');
 	require_once('core/connection.php');
+	
 	include('fonction.php');
 	// Chargement Témoignage
 	$requete = $con->prepare('SELECT * FROM temoignage,utilisateur WHERE temoignage.id_utilisateur=utilisateur.id');
@@ -66,11 +68,35 @@
     <!--====== Responsive css ======-->
     <link rel="stylesheet" href="include/css/responsive.css">
   
-  
+ 
+
 </head>
 
 <body>
-   
+   <!--MODAL-->		
+	<div class="modal fade" tabindex="-1" id="Modal_login"  role="dialog"  aria-hidden="true">
+	<div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+	  <div id="alerte"></div>
+        <h5 class="modal-title">Alerte</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <div class="modal-body">
+		<h4>Vous n'etes pas Connecté(e)</h4>
+		<p>Veuillez vous inscrire si vous n'avez pas encore de compte</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>           
+        </div>
+      
+
+    </div>
+  </div>
+</div>
+<!--FIN MODAL-->
    <!--====== ANIMATION ======-->
     
     <div class="preloader">
@@ -119,9 +145,9 @@
                                         
                                     </li>
                                     <li class="nav-item">
-                                        <a class="" href="login"><i class="fa fa-user-circle"></i> Connexion</a>
-                                        
+                                        <a id="btn_connexion" href="login"><i class="fa fa-user-circle"></i>Connexion</a>
                                     </li>
+								
                                     
                                 </ul>
                             </div>
@@ -575,18 +601,38 @@
 
 		
 <script>
-   
+   tester_session();
   
-			   $("#mail").keyup(function(e){
-				   e.preventDefault();
-				   var extension = $('#mail').val().split('@').pop().toLowerCase();
-				if(jQuery.inArray(extension,['uvs.edu.sn','uadb.edu.sn','ucad.edu.sn']) == -1){
-					$('#small_mail').html('<h6 class="alert alert-danger">Adresse mail Invalide</h6>').fadeIn().delay(100).fadeOut();					
-                    return false;
-                }
-				Check_mail();
-			   });
-			  function Check_mail(){
+function tester_session(){
+	$.ajax({
+		url: 'controllers/control_session.php',
+		type: 'POST',
+		success:function(data){
+			if(data == 'non connecté'){
+				$('#Modal_login').modal('show');
+				
+			}else{
+				$('#btn_connexion').val("Vous etes Connecté !") ;
+				$('#btn_connexion').text("Vous etes Connecté !") ;
+			}
+		}
+	})
+	
+}
+	  
+  
+  /* CONTROL SAISIE */
+	$("#mail").keyup(function(e){
+			   e.preventDefault();
+			   var extension = $('#mail').val().split('@').pop().toLowerCase();
+			if(jQuery.inArray(extension,['uvs.edu.sn','uadb.edu.sn','ucad.edu.sn']) == -1){
+				$('#small_mail').html('<h6 class="alert alert-danger">Adresse mail Invalide</h6>').fadeIn().delay(100).fadeOut();					
+				return false;
+			}
+			Check_mail();
+	});
+	/* CONTROL MAIL */
+	function Check_mail(){
 				  var action = "verifier";	
 					var email = $('#mail').val();
 					$.ajax({
@@ -610,7 +656,7 @@
 					});
 				}
 
-			  
+		/* INSCRIPTION */	  
 			   $('#form_inscription').submit(function(e){
 				   e.preventDefault();
 				   var extension = $('#mail').val().split('@').pop().toLowerCase();
