@@ -74,7 +74,6 @@
         <li class=""><a href="<?php echo base_url?>memoire" > <i class="icon-list-alt"></i><span>Mémoire</span> <b class="caret"></b></a>         
         </li>
 		<li class=""><a href="<?php echo base_url?>temoignage" > <i class="icon-book"></i><span>Témoignage</span> <b class="caret"></b></a></li>       		
-        <li><a href="<?php echo base_url?>statistique"><i class="icon-bar-chart"></i><span>Statistique</span> </a> </li>
 		<li><a href="<?php echo base_url?>message"><i class="icon-envelope"></i><span>Message</span> </a> </li>       
         <li class=""><a href="<?php echo base_url?>activite" > <i class="icon-long-arrow-down"></i><span>Activité</span> <b class="caret"></b></a>
           

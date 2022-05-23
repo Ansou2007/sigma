@@ -4,11 +4,12 @@ require_once base_app.'/core/connection.php';
 include base_app.'/include2/header.php';
 
 
-
+	/*
 	$requete = $con->prepare("SELECT * FROM memoire");
 	$requete->execute();
 	$memoire = $requete->fetchAll();
 	//print_r($memoire);
+	*/
 	$requet = $con->prepare("SELECT nom_categorie FROM categorie");
 	$requet->execute();
 	$categorie = $requet->fetchAll();
@@ -40,6 +41,7 @@ include base_app.'/include2/header.php';
       <form id="formulaire"  method="POST" enctype="multipart/form-data">
         <div class="modal-body">
 		<input type="hidden" name="id_utilisateur" id="id_utilisateur" value="<?=$id_utilisateur?>">  
+		<input type="hidden" name="nom_complet" id="nom_complet" value="<?=$nom_complet?>">  
 		<input type="hidden" name="hidden_id" id="hidden_id" > 
 		<input type="hidden" name="mail" id="mail" value="<?=$mail?>">
 		<input type="hidden" name="action" id="action" value="ajout"/>  
@@ -49,7 +51,7 @@ include base_app.'/include2/header.php';
 		  <option disabled selected>Choisir</option>
 			<?php foreach($categorie as $categorie){ ?>
 			<option 
-				value="<?=$categorie['nom_categorie']?>"><?php echo utf8_encode($categorie['nom_categorie'])?>
+				value="<?=$categorie['nom_categorie']?>"><?php echo $categorie['nom_categorie']?>
 			</option>
 			<?php }?>
 		 </select>
@@ -129,6 +131,7 @@ $('#formulaire').submit(function(event){
 				var id_utilisateur = $('#id_utilisateur').val();
 				var mail = $('#mail').val();
 				var document = $('#document').val();
+				var nom_complet = $('#nom_complet').val();
 				 
 				$.ajax({
 					url: "traitement_m.php",

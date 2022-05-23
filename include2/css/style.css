@@ -84,7 +84,7 @@ textarea {
 }
 
 .navbar .nav a {
-	font-size: 11px;
+	font-size: 15px;
 }
 .navbar .nav>li>a { color:#fff !important;}
 .navbar .brand {
@@ -127,7 +127,6 @@ textarea {
 
 .subnavbar .container > ul {
 	display: inline-block;
-	
 	height: 80px;
 	padding: 0;
 	margin: 0;
@@ -136,12 +135,10 @@ textarea {
 
 .subnavbar .container > ul > li {
 	float: left;
-	
 	min-width: 90px;
 	height: 60px;
 	padding: 0;
 	margin: 0;
-	
 	text-align: center;
 	list-style: none;
 	

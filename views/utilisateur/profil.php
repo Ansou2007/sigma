@@ -119,7 +119,7 @@ $profil = $requete->fetchAll();
 				<th>Date et Lieu de Naissance:<td><?php echo utf8_encode(strtoupper($profil['date_naissance'].' à '.$profil['lieu_naissance']))?></td></th>
 				</tr>
 				<tr>
-				<th>Université:<td><?php echo utf8_encode(strtoupper($profil['universite']))?></td></th>
+				<th>Université:<td><?php echo (strtoupper($profil['universite']))?></td></th>
 				</tr>
 				<tr>
 				<th>Role:<td><?php echo strtoupper($profil['role'])?></td></th>

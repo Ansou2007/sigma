@@ -16,9 +16,9 @@ RewriteRule ^message views/message/message.php
 
 RewriteRule ^memoire views/memoire/memoire.php
 RewriteRule ^traitement_m views/memoire/traitement_memoire.php
+RewriteRule ^lecture.php views/memoire/lecture.php
+RewriteRule ^detail.php views/memoire/display.php?code=$1 [QSA]
 
-RewriteRule ^lecture.php views/memoire/lecture.php?code=$1 [QSA]
-RewriteRule ^display.php views/memoire/display.php
 #### UTILISATEUR ############
 RewriteRule ^utilisateur views/utilisateur/utilisateur.php
 RewriteRule ^profil views/utilisateur/profil.php
@@ -29,6 +29,7 @@ RewriteRule ^traitement_profil views/utilisateur/traitement_profil.php
 RewriteRule ^traitement_activation views/utilisateur/traitement_activation.php
 
 RewriteRule ^activite views/activite/activite.php
+RewriteRule ^traitement_activite views/activite/traitement_activite.php
 #### ADMIN ############
 RewriteRule ^admin views/admin/admin.php
 RewriteRule ^liste_memoire views/admin/liste_memoire.php

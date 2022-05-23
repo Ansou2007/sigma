@@ -266,11 +266,19 @@
                                 <div class="name">
                                     <a href="#"><h6><?=$memoire['nom_complet']?></h6></a>
                                 </div>
+								<div class="admin">
+                                    <ul>
+                                    <li><a href="#"><i class="fa fa-envelope"></i><span>0</span></a></li>
+                                    <li><a href="#"><i class="fa fa-heart"></i><span>0</span></a></li>
+                                    </ul>
+                                    </div>
                                 
                             </div>
                         </div>
                         <div class="cont">
-                            <a href="#"><h4><?=$memoire['sujet']?></h4></a>
+                            
+                            <a id="lien" href='detail.php?code=<?=$memoire["numero_depot"]?>' target="_blank"><h4><?=$memoire["sujet"]?></h4></a>
+
                         </div>
                     </div> 
                 </div>

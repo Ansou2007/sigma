@@ -34,7 +34,7 @@ include base_app.'/include2/header.php';
       <form  id="formulaire" method="POST" >
         <div class="modal-body">
 		<input type="hidden" name="id_utilisateur" id="id_utilisateur" value="<?=$id_utilisateur?>" >
-		<input type="text" id="hidden_id" name="hidden_id" >   
+		<input type="hidden" id="hidden_id" name="hidden_id" >   
 		<input type="hidden" name="action" id="action" value="ajout"/>  		
         <label>Votre Témoignage:</label>
          <div class="form-group">            

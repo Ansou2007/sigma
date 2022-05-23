@@ -17,12 +17,12 @@
 <!-- Le javascript
 ================================================== --> 
 <!-- Placed at the end of the document so the pages load faster --> 
-<script src="<?php echo base_url?>/include2/js/jquery-1.7.2.min.js"></script> 
-<script src="<?php echo base_url?>/include2/js/excanvas.min.js"></script> 
-<script src="<?php echo base_url?>/include2/js/chart.min.js" type="text/javascript"></script> 
-<script src="<?php echo base_url?>/include2/js/bootstrap.js"></script>
+<script src="<?php echo base_url?>include2/js/jquery-1.7.2.min.js"></script> 
+<script src="<?php echo base_url?>include2/js/excanvas.min.js"></script> 
+
+<script src="<?php echo base_url?>include2/js/bootstrap.jss"></script>
  
-<script src="<?php echo base_url?>/include2/js/base.js"></script> 
+<script src="<?php echo base_url?>include2/js/base.js"></script> 
 
 
 </body>

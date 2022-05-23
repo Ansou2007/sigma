@@ -465,13 +465,13 @@
     <!--====== Main js ======-->
     <script src="include/js/main.js"></script>
     
-    <!--====== Map js ======-->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDC3Ip9iVC0nIxC6V14CKLQ1HZNF_65qEQ"></script>
-    <script src="include/js/map-script.js"></script>
+    
+    
 <script>
    /*----------CHARGEMENT--------------*/
 $(document).ready(function(){
 Liste_memoire();
+
 tester_session();
     $("#rechercher").keyup(function(e){
         e.preventDefault();
@@ -487,7 +487,7 @@ tester_session();
                         categorie :txt
                     },
                     success:function(data){
-                        $('#memoire').html(data);
+                    $('#memoire').html(data);
                     }
                  });
                 }else{
@@ -496,8 +496,9 @@ tester_session();
     })
 });
 
-  
+  /* TESTER session*/
   function tester_session(){
+      
       $.ajax({
           url: './controllers/control_session.php',
           type: 'POST',
@@ -506,13 +507,14 @@ tester_session();
                   $('#Modal_login').modal('show');
                   
               }else{
-                  $('#btn_connexion').val("Vous etes Connecté !") ;
+                //  $('#btn_connexion').val("Vous etes Connecté !") ;
                   $('#btn_connexion').text("Vous etes Connecté !") ;
               }
           }
       })
       
   }
+  /*LISTE MEMOIRE*/
 function Liste_memoire(){
 	var action = "liste_memoire";
 	$.ajax({
@@ -596,6 +598,24 @@ function Liste_memoire(){
 				   } 
 			   });
 		 //FIN INSCRIPTION
+         /* LIEN CLIQUABLE*/
+         function session(){   
+             
+        $.ajax({
+          url: 'controllers/control_session.php',
+          type: 'POST',
+          success:function(data){
+              if(data == 'non connecté'){     
+                    $('#Modal_login').modal('show'); 
+                    return false;      
+              }else{
+                  $('#btn_connexion').text("Vous etes Connecté !") ;
+                  return true;
+              }
+          }
+          });
+         };
+        
 </script>
 </body>
 

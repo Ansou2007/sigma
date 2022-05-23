@@ -13,13 +13,13 @@ if($_POST['action'] == "ajout"){
 	$categorie = $_POST['categorie'];
 	$date = date('Y-m-d');
 	$sujet = $_POST['sujet'];
-	$auteur = "Ansoumane Michel TAMBA";
+	$auteur = $_POST['nom_complet'];
 	$mots_cles = $_POST['mot_cle'];
 	$mail = $_POST['mail'];
 	$document_name = $_FILES['document']['name'];
 	$document_tmp = $_FILES['document']['tmp_name'];
 	$document_destination = "Depot/$mail/".$document_name;
-	//$document_destination ='../../depot/'.$document_name;
+	
 	$document_extension = strrchr($document_name, ".");
 	$extension_autorise = array('.pdf','.PDF');
 	if(in_array($document_extension,$extension_autorise)){
@@ -57,6 +57,7 @@ if($_POST['action'] == "ajout"){
 	$sortie = '
 					<thead>
 					<tr>
+						<th>N°</th>
 						<th>Catégorie</th>		
 						<th>Code Dépot</th>	
 						<th>Date Publication</th>
@@ -79,7 +80,7 @@ if($_POST['action'] == "ajout"){
 					<td>'.$memoire["date_memoire"].'</td>
 					<td>'.$memoire["sujet"].'</td>	
 					<td>
-					<form action="display.php" method="POST">
+					<form action="lecture.php" method="POST">
 					<input  type="hidden" name="numero_depot" value="'.$memoire["numero_depot"].'">
 					<Button type="submit" name="voir"><i class="icon-eye-open"></i>Voir</Button>
 					</form>

@@ -104,3 +104,12 @@ libelle varchar(150)
 )ENGINE=InnoDB DEFAULT charset=utf8;
 ALTER TABLE journal ADD CONSTRAINT fk_jour_util FOREIGN KEY(id_utilisateur) REFERENCES utilisateur(id)
 ON UPDATE CASCADE;
+/* MESSAGE */
+drop table if exists message;
+CREATE TABLE message(
+id int primary key auto_increment,
+id_destinataire int,
+auteur varchar(150),
+message text,
+date_message datetime)ENGINE=InnoDB DEFAULT charset=latin1;
+ALTER TABLE message  ADD CONSTRAINT fk_messa_uti FOREIGN KEY(id_destinataire) REFERENCES utilisateur(id);

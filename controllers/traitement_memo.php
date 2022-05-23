@@ -5,7 +5,7 @@ require_once base_app.'core/connection.php';
 /* LISTE DES MEMOIRES */
 if($_POST['action'] == "liste_memoire"){
 	
-	$requete = $con->prepare('SELECT * FROM memoire,utilisateur WHERE memoire.id_utilisateur=utilisateur.id order by date_memoire LIMIT 5 ');
+	$requete = $con->prepare('SELECT * FROM memoire,utilisateur WHERE memoire.id_utilisateur=utilisateur.id order by date_memoire DESC LIMIT 6 ');
 	$requete->execute();
 	$memoire = $requete->fetchAll();
 	$ligne = $requete->rowCount();
@@ -23,7 +23,7 @@ if($_POST['action'] == "liste_memoire"){
                                     </div>                                  
                                 </div>
                                 <div class="cont">                                    
-                                    <a href=""><h4>'.$memoire["sujet"].'</h4></a>
+                                    <a id="lien" onclick="session()"  href="detail.php?code='.$memoire["numero_depot"].'" target="_blank"><h4>'.$memoire["sujet"].'</h4></a>
                                     <div class="course-teacher">
                                         <div class="thum">
 										
@@ -35,6 +35,12 @@ if($_POST['action'] == "liste_memoire"){
                                         </div>
                                         <div class="form-group">
                                             <span>Catégorie<h6 class="text text-center">'.$memoire['categorie'].'</h6></span>
+                                        </div>
+										 <div class="admin">
+                                            <ul>
+                                                <li><a href="#"><i class="fa fa-envelope"></i><span>0</span></a></li>
+                                                <li><a href="#"><i class="fa fa-heart"></i><span>0</span></a></li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -55,7 +61,7 @@ if($_POST['action'] == "liste_memoire"){
                 </div>';
 	echo $sortie;
 }
-//RECHERCHE
+/*----------------RECHERCHE */
 
 if($_POST['action'] == "recherche"){	
     $sujet = $_POST['sujet'];
@@ -79,8 +85,8 @@ if($_POST['action'] == "recherche"){
                                     </div>                                  
                                 </div>
                                 <div class="cont">                                    
-                                    <a href=""><h4>'.$memoire["sujet"].'</h4></a>
-                                    <div class="course-teacher">
+                                <a id="lien" name="lien" onclick="return false"  href="detail.php?code='.$memoire["numero_depot"].'" target="_blank"><h4>'.$memoire["sujet"].'</h4></a>
+                                <div class="course-teacher">
                                         <div class="thum">
                                         <a href="#"><img src="data:image/jpeg;base64,'.base64_encode($memoire["photo"]).'" alt="photo" height="50" width="50" ></a>
 
@@ -91,13 +97,18 @@ if($_POST['action'] == "recherche"){
                                         <div class="form-group">
                                             <span>Catégorie<h6 class="text text-center">'.$memoire['categorie'].'</h6></span>
                                         </div>
+										 <div class="admin">
+                                            <ul>
+                                                <li><a href="#"><i class="fa fa-envelope"></i><span>31</span></a></li>
+                                                <li><a href="#"><i class="fa fa-heart"></i><span>0</span></a></li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div> <!-- singel course -->
                         </div>
                     
 					';
-		
 			}
 			
 			}else{
@@ -110,3 +121,5 @@ if($_POST['action'] == "recherche"){
                 </div>';
 	echo $sortie;
 }
+
+/*-------------- FIN RECHERCHE */
