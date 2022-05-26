@@ -40,4 +40,9 @@ RewriteRule ^categorie views/admin/categorie.php
 RewriteRule ^filiere views/admin/filiere.php
 RewriteRule ^liste_utilisateur views/admin/liste_utilisateur.php
 RewriteRule ^admin_profil views/admin/profil_admin.php
-
+### TRAITEMENT ADMIN ########
+RewriteRule ^listememoire  controllers/admin_liste_memoire.php
+RewriteRule ^listetemoignage  controllers/admin_liste_temoignage.php
+RewriteRule ^listeutilisateur  controllers/admin_liste_utilisateur.php
+RewriteRule ^listefiliere  controllers/admin_liste_filiere.php
+RewriteRule ^listecategorie controllers/admin_liste_categorie.php

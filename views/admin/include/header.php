@@ -19,12 +19,11 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link href="<?php echo base_url?>include2/css/bootstrap.min.css" rel="stylesheet">
 <link href="<?php echo base_url?>include2/css/bootstrap-responsive.min.css" rel="stylesheet">
-<link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600"rel="stylesheet">
 <link href="<?php echo base_url?>include2/css/font-awesome.css" rel="stylesheet">
 <link href="<?php echo base_url?>include2/css/style.css" rel="stylesheet">
 <link href="<?php echo base_url?>include2/css/pages/plans.css" rel="stylesheet"> 
 <link href="<?php echo base_url?>include2/css/pages/dashboard.css" rel="stylesheet">
-<script src="<?php echo base_url?>include2/js/jquery-1.7.2.min.js"></script> 
+<script src="<?php echo base_url?>views/admin/include/js/jquery-1.7.2.min.js"></script> 
 
 
 </head>

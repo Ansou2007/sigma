@@ -37,7 +37,7 @@ $temoignage = nbre_temoignage();
 									</div> <!-- /plan-price -->
 						        </div> <!-- /plan-header -->	        
 								<div class="plan-actions">				
-									<a href="javascript:;" class="btn">Détail</a>				
+									<a href="liste_utilisateur" class="btn">Détail</a>				
 								</div> <!-- /plan-actions -->
 					
 							</div> <!-- /plan -->
@@ -53,13 +53,9 @@ $temoignage = nbre_temoignage();
 						            <div class="plan-price">
                                     <?php echo $memoire ?><span class="term">Mémoires</span>
 									</div> <!-- /plan-price -->
-									
 						        </div> <!-- /plan-header -->	          
-						        
-						       
-								
 								<div class="plan-actions">				
-									<a href="javascript:;" class="btn">Détail</a>				
+									<a href="liste_memoire" class="btn">Détail</a>				
 								</div> <!-- /plan-actions -->
 					
 							</div> <!-- /plan -->
@@ -68,19 +64,15 @@ $temoignage = nbre_temoignage();
 					    <div class="plan-container">
 					        <div class="plan">
 						        <div class="plan-header">
-					                
 						        	<div class="plan-title">
 						        		TOTAL TEMOIGNAGE	        		
 					        		</div> <!-- /plan-title -->
-					                
 						            <div class="plan-price">
                                     <?php echo $temoignage ?><span class="term">Témoignages</span>
 									</div> <!-- /plan-price -->
-									
 						        </div> <!-- /plan-header -->	       
-								
 								<div class="plan-actions">				
-									<a href="javascript:;" class="btn">Détail</a>				
+									<a href="liste_temoignage" class="btn">Détail</a>				
 								</div> <!-- /plan-actions -->
 					
 							</div> <!-- /plan -->

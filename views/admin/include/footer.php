@@ -17,7 +17,7 @@
 <!-- Le javascript
 ================================================== --> 
 <!-- Placed at the end of the document so the pages load faster --> 
-<script src="<?php echo base_url?>include2/js/jquery-1.7.2.min.js"></script> 
+<script src="<?php echo base_url?>views/admin/include/js/jquery-1.7.2.min.js"></script> 
 <script src="<?php echo base_url?>include2/js/excanvas.min.js"></script> 
 
 <script src="<?php echo base_url?>include2/js/bootstrap.jss"></script>

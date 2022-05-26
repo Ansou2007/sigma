@@ -89,7 +89,8 @@ date_memoire DATE,
 sujet varchar(250),
 lien_memoire varchar(150),
 auteur varchar(250),
-mots_cles varchar(250)
+mots_cles varchar(250),
+autorisation int(1)
 )ENGINE=InnoDB DEFAULT charset=utf8;
 ALTER TABLE memoire ADD CONSTRAINT Fk_memoire_utili  FOREIGN KEY(id_utilisateur) REFERENCES utilisateur(id) 
 ON UPDATE CASCADE;

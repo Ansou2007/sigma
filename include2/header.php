@@ -1,5 +1,5 @@
 <?php
-		require_once base_app.'views/utilisateur/session.php';		
+		require_once base_app.'views/utilisateur/session.php';	
 		$id_utilisateur = $_SESSION['utilisateur']['id'];		
 		$nom_complet = $_SESSION['utilisateur']['nom_complet'];
 		$mail = $_SESSION['utilisateur']['email'];
@@ -22,8 +22,6 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link href="<?php echo base_url?>include2/css/bootstrap.min.css" rel="stylesheet">
 <link href="<?php echo base_url?>include2/css/bootstrap-responsive.min.css" rel="stylesheet">
-<link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600"
-        rel="stylesheet">
 <link href="<?php echo base_url?>include2/css/font-awesome.css" rel="stylesheet">
 <link href="<?php echo base_url?>include2/css/style.css" rel="stylesheet">
 <link href="<?php echo base_url?>include2/css/pages/dashboard.css" rel="stylesheet">
@@ -74,7 +72,7 @@
         <li class=""><a href="<?php echo base_url?>memoire" > <i class="icon-list-alt"></i><span>Mémoire</span> <b class="caret"></b></a>         
         </li>
 		<li class=""><a href="<?php echo base_url?>temoignage" > <i class="icon-book"></i><span>Témoignage</span> <b class="caret"></b></a></li>       		
-		<li><a href="<?php echo base_url?>message"><i class="icon-envelope"></i><span>Message</span> </a> </li>       
+		<li><a href="<?php echo base_url?>message"><i class="icon-envelope"></i><span>Message </span> </a> </li>       
         <li class=""><a href="<?php echo base_url?>activite" > <i class="icon-long-arrow-down"></i><span>Activité</span> <b class="caret"></b></a>
           
         </li>

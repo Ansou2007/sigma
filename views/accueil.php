@@ -30,7 +30,7 @@ $journal = $requete->fetchall();
 					<div class="widget-content">
 						<h2><i class="icon-book"></i> Temoignage : <?=nbre_temoignage()?></h2>
 						<h2><i class="icon-list-alt"></i> Mémoire Déposé : <?=nbre_memoire()?></h2>
-						<h2><i class="icon-envelope"></i> : 0</h2>
+						<h2><i class="icon-envelope"></i> : <?=nbre_message()?></h2>
 					</div> <!-- /widget-content -->
 				</div> <!-- /widget -->
 				
